@@ -1,2 +1,2 @@
 # championship-football
-Campeonato de fase de grupos desarrollado en golang, angular 2 y bootstrap
+Campeonato de fase de grupos desarrollado en GO, angular 2 y bootstrap

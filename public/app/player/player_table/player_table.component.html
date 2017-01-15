@@ -1,0 +1,82 @@
+<table class="table table-hover table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Posicion</th>
+        <th>Ocupación</th>
+        <th>Numero</th>
+        <th>Eliminar / Editar</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let item of items | paginate: {itemsPerPage: 10, currentPage:page, id: '1'};"
+        (click)="selectClickedRow(item)" [class.active]="item.name == name">
+
+        <td>{{item.name}}</td>
+        <td>{{item.lastname}}</td>
+        <td>{{item.position}}</td>
+        <td>{{item.classtype}}</td>
+        <td>{{item.number}}</td>
+
+        <td>
+            <div class="btn-group-sm pull-right" role="group">
+                <button title="" type="button"
+                        class="btn btn-danger" data-toggle="modal" data-target="#deleteJugador">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+
+                <button title="" type="button"
+                        class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil"></span>
+
+                </button>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<pagination-controls (pageChange)="page = $event" id="1"
+                     maxSize="5"
+                     directionLinks="true"
+                     autoHide="true"
+                     previousLabel="Anterior"
+                     nextLabel="Siguiente"
+                     screenReaderPaginationLabel="Pagination"
+                     screenReaderPageLabel="page"
+                     screenReaderCurrentLabel="You're on page">
+</pagination-controls>
+
+
+<div class="modal fade in" tabindex="-1" role="dialog" id="deleteJugador">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    ¿Eliminar al jugador {{name}} {{lastname}} ?
+                </h4>
+            </div>
+
+            <form id="form-delete-moderador">
+                <div class="modal-body bg-warning">
+                    Al eliminar un un jugador este podrá seguir usando el sistema,
+                    pero no tendrá seguir jugando en este campeonato. Esta acción
+                    es <strong>irreversible</strong>.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        No, conservar jugador
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        Si, eliminar jugador
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

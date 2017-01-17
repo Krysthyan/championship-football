@@ -1,31 +1,26 @@
 <div class="col-md-4 table-responsive">
     <table class="table table-hover table-striped table-bordered">
-        <thead>
         <tr>
             <th>Id</th>
             <th>Nombre</th>
         </tr>
-        </thead>
 
-        <tbody>
-        <tr *ngFor="let item of items | paginate: {itemsPerPage: 10, currentPage:page, id: '1'};"
-            (click)="selectClickedRow(item)" [class.active]="item.name == name_team_select">
+        <tr (click)="selectClickedRow(item)" [class.active]="item.name == name_team_select  "
+                *ngFor="let item of items |  paginate: { id: 'team_table', itemsPerPage: 10, currentPage: team }">
 
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
 
         </tr>
-        </tbody>
     </table>
-    <pagination-controls (pageChange)="page = $event" id="1"
-                         maxSize="5"
+    <pagination-controls class="pagination justify-content-center"
+                         (pageChange)="team = $event" id="team_table"
+                         maxSize="9"
                          directionLinks="true"
                          autoHide="true"
                          previousLabel="Anterior"
                          nextLabel="Siguiente"
                          screenReaderPaginationLabel="Pagination"
                          screenReaderPageLabel="page"
-                         screenReaderCurrentLabel="You're on page">
-    </pagination-controls>
-
+    ></pagination-controls>
 </div>

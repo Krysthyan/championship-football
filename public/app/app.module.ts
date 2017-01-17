@@ -12,6 +12,7 @@ import {TeamComponent}        from './team/team_description/team_description.com
 import {JugadorComponet}      from './player/player_table/player_table.component'
 import {AppRoutingModule}     from './app-routing.module';
 
+
 @NgModule({
     imports: [
         BrowserModule,

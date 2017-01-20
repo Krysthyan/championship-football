@@ -12,7 +12,7 @@ export class HeroService {
         return json;
     }
 
-    getPersonTeam(id: number){
+    getPersonTeam(id: string){
         let json = this.http.get("http://localhost:8080/getPersonTeam?id="+ id );
         return json;
     }

@@ -1,6 +1,6 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 
-import {Http} from "@angular/http";
+import {TeamDesktopComponent} from '../team_desktop/team_desktop.component'
 
 import  {HeroService} from "../../providers/team.service"
 
@@ -9,12 +9,16 @@ import  {HeroService} from "../../providers/team.service"
     selector: 'team-table',
     templateUrl: 'team_table.component.html',
     providers: [HeroService]
+
 })
 
-export class TeamTableComponent implements OnInit {
+export class TeamTableComponent implements OnInit, OnChanges {
 
-    items: any;
+
+    public items: Array<{id: string, name: string}>;
     selectClickedRow: Function;
+    @Input() team_save_return: Object;
+
 
     _id_select: number;
     @Output() id_nameChange = new EventEmitter();
@@ -29,10 +33,18 @@ export class TeamTableComponent implements OnInit {
         this.id_nameChange.emit(this._id_select);
     }
 
+
     constructor(private hero: HeroService) {
 
 
     }
+    //todo arreglar despues ya que esta haciendo de nuevo consulta en vez de solo de agregar el item
+    ngOnChanges(changes: SimpleChanges): void {
+       this.ngOnInit()
+
+    }
+
+
 
     ngOnInit() {
         this.hero.getTeam().subscribe(

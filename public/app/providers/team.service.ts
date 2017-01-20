@@ -21,7 +21,6 @@ export class HeroService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = JSON.stringify(team);
-        console.log(body);
         let json = this.http.post('http://localhost:8080/team/save', body, headers);
         return json
 

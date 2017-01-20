@@ -9,6 +9,7 @@ import {HeroService} from '../../providers/team.service'
 
 })
 
+
 export class TeamDesktopComponent {
 
     public id_team_select = 0;
@@ -16,16 +17,18 @@ export class TeamDesktopComponent {
 
     public name_save_team = '';
 
-    public teams_save_return = {};
+    public teams_save_return : Team;
 
     constructor(private hero: HeroService) {
     }
 
     saveTeam(){
-        console.log({name: this.name_save_team});
+
         this.hero.postSaveTeam({name: this.name_save_team}).subscribe(
             data => {
-                this.teams_save_return = data.json();
+
+                this.teams_save_return = new Team(data.json().id,
+                                                    data.json().name);
             },
             err => {
                 console.log(err)
@@ -36,4 +39,9 @@ export class TeamDesktopComponent {
         );
     }
 
+}
+
+class Team{
+    constructor(public id: string,
+                public name: string){}
 }

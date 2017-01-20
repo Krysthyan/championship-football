@@ -17,8 +17,8 @@ func LogChampionship(
 	cyan := color.New(color.FgCyan).SprintFunc()
 
 	if type_request == "GET" {
-		log.Println(blue("GET ") + "----> " + yellow(url) + " ===> " + cyan(status))
+		log.Println(blue("GET ") + "----> " + yellow("localhost:8080" + url) + " ===> " + cyan(status))
 	} else {
-		log.Println(green("POST ") + "----> " + yellow(url) + " ===> " + cyan(status))
+		log.Println(green("POST ") + "----> " + yellow("localhost:8080" + url) + " ===> " + cyan(status))
 	}
 }

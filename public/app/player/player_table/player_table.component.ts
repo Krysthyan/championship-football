@@ -14,7 +14,8 @@ export class JugadorComponet implements OnChanges {
 
 
     items: any;
-    @Input() id_team: number;
+    @Input() id_team: string;
+    @Input() name_team: string;
 
     selectClickedRow: Function;
 
@@ -22,26 +23,30 @@ export class JugadorComponet implements OnChanges {
     public lastname: string;
 
     constructor(private hero: HeroService) {
-
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log("hoola mundo");
-        this.hero.getPersonTeam(this.id_team).subscribe(
-            data => {
-                this.items = data.json();
-            },
-            err => {
-                console.error(err)
-            },
-            () => {
-                console.log("Datos obtenidos")
-            }
-        );
         this.selectClickedRow = function (item: any) {
             this.name = item.name;
             this.lastname = item.lastname
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (this.id_team.length > 0){
+            console.log("Player");
+            console.log(this.id_team);
+            this.hero.getPersonTeam(this.id_team).subscribe(
+                data => {
+                    this.items = data.json();
+                },
+                err => {
+                    console.error(err)
+                },
+                () => {
+                    console.log("Datos obtenidos")
+                }
+            );
+        }
+
+
     }
 
 

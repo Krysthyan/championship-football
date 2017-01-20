@@ -1,12 +1,17 @@
-<div class="col-md-8 table-responsive">
+<div class="col-md-6 table-responsive">
     <table class="table table-hover table-striped table-bordered">
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Posicion</th>
-            <th>Ocupación</th>
             <th>Numero</th>
-            <th>Eliminar / Editar</th>
+            <th>
+                <button
+                        type="button"
+                        class="btn btn-primary btn-group-justified"
+                        data-toggle="modal" data-target="#saveJugador"
+                >Agregar</button>
+            </th>
+
         </tr>
 
         <tr *ngFor="let item of items | paginate: { id: 'player_table', itemsPerPage: 7, currentPage: player }"
@@ -14,24 +19,21 @@
 
             <td>{{item.name}}</td>
             <td>{{item.lastname}}</td>
-            <td>{{item.position}}</td>
-            <td>{{item.classtype}}</td>
             <td>{{item.number}}</td>
+            <td ><div class="btn-group btn-block ">
+                <button type="button" class="btn btn-danger right">Opciones</button>
+                <button type="button" class="btn btn-danger right  dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" data-toggle="modal" data-target="#viewJugador">Ver</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#editJugador">Editar</a></li>
+                    <li><a class="alert-warning" href="#" data-toggle="modal" data-target="#deleteJugador">Eliminar</a></li>
+                </ul>
+            </div></td>
 
-            <td>
-                <div class="btn-group-sm pull-right" role="group">
-                    <button title="" type="button"
-                            class="btn btn-danger" data-toggle="modal" data-target="#deleteJugador">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
 
-                    <button title="" type="button"
-                            class="btn btn-primary">
-                        <span class="glyphicon glyphicon-pencil"></span>
-
-                    </button>
-                </div>
-            </td>
         </tr>
     </table>
 
@@ -46,33 +48,9 @@
 </div>
 
 
-<div class="modal fade in" tabindex="-1" role="dialog" id="deleteJugador">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-                <h4 class="modal-title">
-                    ¿Eliminar al jugador {{name}} {{lastname}} ?
-                </h4>
-            </div>
 
-            <form id="form-delete-moderador">
-                <div class="modal-body bg-warning">
-                    Al eliminar un un jugador este podrá seguir usando el sistema,
-                    pero no tendrá seguir jugando en este campeonato. Esta acción
-                    es <strong>irreversible</strong>.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        No, conservar jugador
-                    </button>
-                    <button type="submit" class="btn btn-danger">
-                        Si, eliminar jugador
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
+<person-save name_team="{{name_team}}"></person-save>
+<person-delete></person-delete>
+<person-edit></person-edit>
+<person-view></person-view>

@@ -3,7 +3,7 @@ package models
 import 	"encoding/json"
 
 type Team struct {
-	Id   int    `json:"id" orm:"pk"`
+	Id   string    `json:"id" orm:"pk"`
 	Name string `json:"name" `
 }
 
@@ -16,4 +16,8 @@ func GetListTeam() (mapB []byte) {
 
 	mapB, _ = json.Marshal(teams)
 	return
+}
+
+func SaveTeamOrm(team Team)  {
+	ORM().Insert(&team)
 }

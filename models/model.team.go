@@ -1,13 +1,13 @@
 package models
 
-import "encoding/json"
+import 	"encoding/json"
 
 type Team struct {
 	Id   int    `json:"id" orm:"pk"`
 	Name string `json:"name" `
 }
 
-func GetTeam() (mapB []byte) {
+func GetListTeam() (mapB []byte) {
 	var teams []Team
 
 	ORM().QueryTable("team").

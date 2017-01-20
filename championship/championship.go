@@ -10,7 +10,7 @@ import (
 
 func Run() {
 	championship := mux.NewRouter().StrictSlash(false)
-	championship = routers.InitRouter(championship)
+	routers.InitRouter(championship)
 	championship.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 	http.Handle("/", championship)
 

@@ -6,7 +6,7 @@
         <div class="modal-dialog">
 
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content modal-sm">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Agregar un equipo</h4>
@@ -15,16 +15,12 @@
 
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="email">Identificador:</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="email"
-                                       placeholder="Ingrese Identificador">
-                            </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="pwd">Nombre:</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="pwd" placeholder="Ingrese el nombre">
+                            <div class="col-sm-12">
+                                <input  type="text" [(ngModel)]="name_save_team"  [ngModelOptions]="{standalone: true}"
+                                       class="form-control"
+                                       placeholder="Ingrese nombre del equipo aquí">
                             </div>
                         </div>
 
@@ -33,7 +29,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="agregar()">Agregar
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveTeam()">Agregar
                     </button>
                 </div>
             </div>
@@ -41,13 +37,11 @@
     </div>
 
     <div class="row">
-        <team-table [(id_name)]="id_team_select">
+        <team-table [(id_name)]="id_team_select" team_save_return="{{teams_save_return}}"  >
 
         </team-table>
 
-        <div class="col-md-6">
-            <player id_team="{{id_team_select}}"></player>
-        </div>
+        <player id_team="{{id_team_select}}"></player>
     </div>
 
 </div>

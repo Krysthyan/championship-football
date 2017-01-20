@@ -1,0 +1,39 @@
+<div class="modal fade in" tabindex="-1" role="dialog" id="saveJugador">
+    <div class="modal-dialog">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    ¿Agregar un Jugador
+                </h4>
+
+
+                <div class="modal-body">
+                    <input type="text" disabled [(ngModel)]="name_team" [ngModelOptions]="{standalone: true}"
+                           class="form-control">
+                    <br>
+                    <input type="text"
+                           class="form-control" placeholder="Nombre">
+                    <br>
+                    <input type="text"
+                           class="form-control" placeholder="Apellido">
+                    <br>
+                    <input type="text"
+                           class="form-control" placeholder="Ocupacion">
+                    <br>
+                    <input type="text"
+                           class="form-control" placeholder="Ocupacion">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveTeam()">Agregar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

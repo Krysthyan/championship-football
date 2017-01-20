@@ -15,12 +15,12 @@ import  {HeroService} from "../../providers/team.service"
 export class TeamTableComponent implements OnInit, OnChanges {
 
 
-    public items: Array<{id: string, name: string}>;
+    items: any;
     selectClickedRow: Function;
     @Input() team_save_return: Object;
 
 
-    _id_select: number;
+    _id_select: string;
     @Output() id_nameChange = new EventEmitter();
 
     @Input()
@@ -28,14 +28,32 @@ export class TeamTableComponent implements OnInit, OnChanges {
         return this._id_select;
     }
 
-    set id_name(id: number) {
+    set id_name(id: string) {
         this._id_select = id;
         this.id_nameChange.emit(this._id_select);
     }
 
 
-    constructor(private hero: HeroService) {
+    _name_select: string;
+    @Output() name_teamChange = new EventEmitter();
 
+    @Input()
+    get name_team() {
+        return this._name_select;
+    }
+
+    set name_team(name: string) {
+        this._name_select = name;
+        this.name_teamChange.emit(this._name_select);
+    }
+
+
+    constructor(private hero: HeroService) {
+        this.selectClickedRow = function (item: any) {
+            this.id_name = item.id;
+            this.name_team = item.name;
+            console.log(this.id_name);
+        }
 
     }
     //todo arreglar despues ya que esta haciendo de nuevo consulta en vez de solo de agregar el item
@@ -59,9 +77,7 @@ export class TeamTableComponent implements OnInit, OnChanges {
             }
         );
 
-        this.selectClickedRow = function (item: any) {
-            this.id_name = item.id;
-        }
+
 
     }
 

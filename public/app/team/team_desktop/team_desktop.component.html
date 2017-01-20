@@ -1,7 +1,8 @@
 <div class="container">
     <h3>Equipos</h3>
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Agregar Equipo</button>
-
+    <button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Agregar Equipo</button>
+    <br>
+    <br>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
 
@@ -18,7 +19,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input  type="text" [(ngModel)]="name_save_team"  [ngModelOptions]="{standalone: true}"
+                                <input type="text" [(ngModel)]="name_save_team" [ngModelOptions]="{standalone: true}"
                                        class="form-control"
                                        placeholder="Ingrese nombre del equipo aquí">
                             </div>
@@ -37,11 +38,14 @@
     </div>
 
     <div class="row">
-        <team-table [(id_name)]="id_team_select" [team_save_return]="teams_save_return"  >
-
+        <team-table
+                [(id_name)]="id_team_select"
+                [(name_team)] = "name_team_select"
+                [team_save_return]="teams_save_return">
         </team-table>
 
-        <player id_team="{{id_team_select}}"></player>
+        <team-desc name="{{name_team_select}}"></team-desc>
+        <player id_team="{{id_team_select}}" name_team="{{name_team_select}}"></player>
     </div>
 
 </div>

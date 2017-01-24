@@ -18,7 +18,7 @@ type Player struct {
 func InsertPlayer(player Player) (mapB []byte) {
 	var error_list []tools.ErrorChampionship
 
-	_, err_tx = ormPlayer.Insert(&player)
+	_, err_tx := ORM().Insert(&player)
 	tools.ListError(&error_list, err_tx)
 
 	if len(error_list) != 0 {

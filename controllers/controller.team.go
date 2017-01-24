@@ -30,7 +30,7 @@ func SaveTeam(w http.ResponseWriter, h *http.Request)  {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	w.Write(models.InsertTeam(team, parameter))
+	w.Write(models.InsertTeam(team))
 }
 
 func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request){

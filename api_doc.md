@@ -6,9 +6,6 @@
  
     > `http://localhost:8080/team/save`
 
-        params
-            - championship_id
-
 
 - get all list teams
  

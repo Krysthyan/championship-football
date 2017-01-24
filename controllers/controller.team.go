@@ -51,7 +51,7 @@ func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	w.Write(models.GetTeamsFromChampionship(h.URL.Query().Get("id_championship")))
+	w.Write(models.GetTeamsFromChampionship(h.URL.Query().Get("championship_id")))
 }
 
 

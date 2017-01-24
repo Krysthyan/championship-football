@@ -6,6 +6,7 @@ import (
 	"championship-football/models"
 	"encoding/json"
 	"log"
+	"championship-football/tools"
 )
 
 func InsertChampionship(w http.ResponseWriter, h *http.Request) {
@@ -16,6 +17,8 @@ func InsertChampionship(w http.ResponseWriter, h *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
+
+	championship.Id = tools.ChampionshipToken(5)
 	models.SaveChampionship(championship)
 }
 

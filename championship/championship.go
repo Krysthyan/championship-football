@@ -32,5 +32,5 @@ func LogMain() {
 	log.Println("\t   Proyecto de base de datos 2")
 	log.Println("\t       GO and Angular 2")
 	log.Println("\t          Gorilla Mux")
-	log.Println("Listening http://localhost:8080 .....")
+	log.Println("   Listening http://localhost:8080 .....")
 }

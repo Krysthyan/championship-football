@@ -7,9 +7,8 @@ import (
 )
 
 type Championship struct {
-	Id string `json:"id" orm:"size(5);ref(pk)"`
+	Id string `json:"id" orm:"column(id);pk"`
 	Name string `json:"name" orm:"size(5)"`
-	Team []Team `orm:"reverse(many)"`
 }
 
 func SaveChampionship(championship Championship)  {
@@ -21,14 +20,15 @@ func SaveChampionship(championship Championship)  {
 	}
 }
 
-func GetChampionship(id string) []byte  {
+func GetChampionship(id string) (mapB []byte)  {
 	var championship Championship
 	ORM().QueryTable("championship").
 		Filter("Id", id).
 		OrderBy("Id").
 		All(&championship)
 
-	return GetJsonChampionship(championship)
+	mapB, _ = json.Marshal(championship)
+	return mapB
 }
 
 func GetChampionshipList() []byte  {
@@ -58,9 +58,6 @@ func UpdateChampionship(id string, name string)  {
 }
 
 func GetJsonChampionship(championship []Championship) (mapB []byte) {
-	for _, element := range championship {
-		ORM().Read(element.Team)
-	}
 	mapB, _ = json.Marshal(championship)
 	return
 }

@@ -11,13 +11,14 @@ type Championship struct {
 	Name string `json:"name" orm:"size(5)"`
 }
 
-func SaveChampionship(championship Championship)  {
+func SaveChampionship(championship Championship) (mapB []byte)  {
 	_,err_orm := ORM().Insert(&championship)
 	err := tools.ChampionshipError(err_orm, &championship)
 
 	if err != "" {
-		log.Println(err)
+		mapB, _ = json.Marshal(tools.ErrorChampionship{Error:err})
 	}
+	return
 }
 
 func GetChampionship(id string) (mapB []byte)  {

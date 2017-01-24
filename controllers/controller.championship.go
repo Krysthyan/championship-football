@@ -12,14 +12,17 @@ import (
 func InsertChampionship(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "championship/save", strconv.Itoa(http.StatusOK))
 	var championship models.Championship
+	championship.Id = tools.ChampionshipToken(5)
 	err := json.NewDecoder(h.Body).Decode(&championship)
 
 	if err != nil {
 		log.Println(err)
 	}
 
-	championship.Id = tools.ChampionshipToken(5)
-	models.SaveChampionship(championship)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	w.Write(models.SaveChampionship(championship))
 }
 
 func GetChampionship(w http.ResponseWriter, h *http.Request)  {

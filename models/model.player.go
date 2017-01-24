@@ -1,44 +1,25 @@
 package models
 
 import (
-	"encoding/json"
+	"log"
+	"championship-football/tools"
 )
 
-type Person struct {
+type Player struct {
 	Id        string `json:"id" orm:"pk"`
 	Name      string `json:"name"`
 	Lastname  string `json:"lastname"`
-	Classtype string `json:"classtype"`
-	Team      *Team  `json:"team" orm:"rel(fk)"`
+	Direction string `json:"direction"`
 	Position  string `json:"position"`
 	Number    int    `json:"number"`
 }
 
-func GetPerson() []byte {
-	var person []Person
 
-	ORM().QueryTable("person").
-		OrderBy("Id").
-		All(&person)
+func InsertPlayer(player Player)  {
+	_, err_orm :=ORM().Insert(&player)
+	err :=tools.ChampionshipError(err_orm, player)
 
-	return GetJsonPerson(person)
-}
-
-func GetPersonTeam(filter_team_id string) []byte {
-	var person []Person
-
-	ORM().QueryTable("person").
-		Filter("team_id", filter_team_id).
-		OrderBy("Id").
-		All(&person)
-
-	return GetJsonPerson(person)
-}
-
-func GetJsonPerson(person []Person) (mapB []byte) {
-	for _, element := range person {
-		ORM().Read(element.Team)
+	if err != "" {
+		log.Println(err)
 	}
-	mapB, _ = json.Marshal(person)
-	return
 }

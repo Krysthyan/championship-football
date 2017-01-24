@@ -7,13 +7,17 @@ import (
 	"github.com/fatih/structs"
 )
 
+type ErrorChampionship struct {
+	Error string `json:"error"`
+}
+
 func ChampionshipToken(size int) string {
 	g := token_generator.Generator{}
 	g.New()
 	return strings.ToUpper(g.GetToken(size))
 }
 
-func ChampionshipError(err error, structCham interface{}) string{
+func ChampionshipError(err error, structCham interface{}) (num_err string) {
 
 	if err != nil {
 		typeErr,_:= strconv.Atoi(
@@ -22,12 +26,15 @@ func ChampionshipError(err error, structCham interface{}) string{
 					err.Error(),
 					" ")[1],
 				":")[0])
-		return GetTypeError(typeErr, structs.Name(structCham))
-	}else {
-		return ""
+	num_err = GetTypeError(typeErr, structs.Name(structCham))
 	}
+	return
+}
 
-
+func ListError(list *[]ErrorChampionship, err error) {
+	if err != nil {
+		*list = append(*list, ErrorChampionship{Error:err.Error()})
+	}
 }
 
 func GetTypeError(err int, typeStruct string) string {

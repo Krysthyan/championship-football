@@ -18,7 +18,7 @@ func GetTeamList(w http.ResponseWriter, h *http.Request) {
 
 func SaveTeam(w http.ResponseWriter, h *http.Request)  {
 	LogChampionship("POST", "team/save", strconv.Itoa(http.StatusOK))
-	parameter := h.URL.Query().Get("id_championship")
+	parameter := h.URL.Query().Get("championship_id")
 	var team models.Team
 
 	err := json.NewDecoder(h.Body).Decode(&team)
@@ -27,22 +27,10 @@ func SaveTeam(w http.ResponseWriter, h *http.Request)  {
 		panic(err)
 	}
 	team.Id = tools.ChampionshipToken(5)
-	models.InsertTeam(team)
-	models.InsertTeamChampionship(models.Team_championship{
-		Championship_id:parameter,
-		Team_id:team.Id,
-	})
-
 
 	w.Header().Set("Content-Type", "application/json")
-	getJsonTeam, err := json.Marshal(team)
-
-	if err != nil {
-		panic(err)
-	}
-
 	w.WriteHeader(http.StatusCreated)
-	w.Write(getJsonTeam)
+	w.Write(models.InsertTeam(team, parameter))
 }
 
 func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request){

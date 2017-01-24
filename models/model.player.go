@@ -3,6 +3,7 @@ package models
 import (
 	"log"
 	"championship-football/tools"
+	"encoding/json"
 )
 
 type Player struct {
@@ -22,4 +23,17 @@ func InsertPlayer(player Player)  {
 	if err != "" {
 		log.Println(err)
 	}
+}
+
+func GetPlayer(id string) (mapB []byte)  {
+	var player Player
+
+	ORM().QueryTable("player").
+	Filter("id", id).
+	OrderBy("Id").
+	One(&player)
+
+	mapB, _= json.Marshal(player)
+
+	return
 }

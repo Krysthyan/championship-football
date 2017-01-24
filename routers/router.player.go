@@ -10,4 +10,8 @@ func RouterPerson(championship *mux.Router)  {
 		"/player/save",
 		controllers.InsertPlayer,
 	).Methods("POST")
+	championship.HandleFunc(
+		"/player/get",
+		controllers.GetPlayer,
+	).Methods("GET")
 }

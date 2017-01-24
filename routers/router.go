@@ -1,7 +1,6 @@
 package routers
 
 import (
-	//"championship-football/controllers"
 	"github.com/gorilla/mux"
 )
 

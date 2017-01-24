@@ -40,8 +40,8 @@ func GetChampionshipList() []byte  {
 	return GetJsonChampionship(championship)
 }
 
-func DeleteChampionship(id string)  {
-	if _, err := ORM().Delete(&Championship{Id:id}); err == nil {
+func DeleteChampionship(championship Championship)  {
+	if _, err := ORM().Delete(&championship); err == nil {
 		log.Println(err)
 	}
 }

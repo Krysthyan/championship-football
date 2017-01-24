@@ -32,3 +32,19 @@ func GetChampionshipList(w http.ResponseWriter, h *http.Request)  {
 	w.WriteHeader(http.StatusOK)
 	w.Write(models.GetChampionshipList())
 }
+func DeleteChampionship(w http.ResponseWriter, h *http.Request)  {
+	LogChampionship("DELETE", "championship/delete", strconv.Itoa(http.StatusOK))
+	var championship models.Championship
+	err := json.NewDecoder(h.Body).Decode(&championship)
+
+	if err != nil {
+		log.Println(err)
+	}
+	models.DeleteChampionship(championship)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	mapB, _ := json.Marshal("delete")
+	w.Write(mapB)
+
+}

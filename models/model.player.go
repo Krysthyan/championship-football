@@ -1,7 +1,6 @@
 package models
 
 import (
-	"log"
 	"championship-football/tools"
 	"encoding/json"
 )
@@ -16,13 +15,33 @@ type Player struct {
 }
 
 
-func InsertPlayer(player Player)  {
-	_, err_orm :=ORM().Insert(&player)
-	err :=tools.ChampionshipError(err_orm, player)
+func InsertPlayer(player Player, championship_id string, team_id string) (mapB []byte) {
+	var error_list []tools.ErrorChampionship
 
-	if err != "" {
-		log.Println(err)
+	ormPlayer := ORM()
+
+	err_tx := ormPlayer.Begin()
+	tools.ListError(&error_list, err_tx)
+
+	_, err_tx = ormPlayer.Insert(&player)
+	tools.ListError(&error_list, err_tx)
+
+	_, err_tx= ormPlayer.Raw("INSERT INTO player_team " +
+		"(team_id, championship_id, player_id) " +
+		"VALUES(?,?,?)",
+		team_id, championship_id, player.Id,
+	).Exec()
+	tools.ListError(&error_list, err_tx)
+
+	if len(error_list) != 0 {
+		mapB, _ = json.Marshal(error_list)
+		ormPlayer.Rollback()
+	}else {
+		mapB, _ = json.Marshal(player)
+		ormPlayer.Commit()
 	}
+
+	return
 }
 
 func GetPlayer(id string) (mapB []byte)  {

@@ -44,3 +44,12 @@ func SaveTeam(w http.ResponseWriter, h *http.Request)  {
 	w.WriteHeader(http.StatusCreated)
 	w.Write(getJsonTeam)
 }
+
+func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request){
+	LogChampionship("GET", "team/getFromChampionship", strconv.Itoa(http.StatusOK))
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(models.GetTeamsFromChampionship(h.URL.Query().Get("id_championship")))
+}
+
+

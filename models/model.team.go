@@ -18,6 +18,6 @@ func GetListTeam() (mapB []byte) {
 	return
 }
 
-func SaveTeamOrm(team Team)  {
+func InsertTeam(team Team)  {
 	ORM().Insert(&team)
 }

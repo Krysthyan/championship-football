@@ -11,11 +11,8 @@ import (
 func InsertPlayer(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "player/save", strconv.Itoa(http.StatusOK))
 
-	championship_id := h.URL.Query().Get("championship_id")
-	team_id := h.URL.Query().Get("team_id")
-
-	var team models.Player
-	err := json.NewDecoder(h.Body).Decode(&team)
+	var player models.Player
+	err := json.NewDecoder(h.Body).Decode(&palyer)
 
 	if err != nil {
 		panic(err)
@@ -23,11 +20,7 @@ func InsertPlayer(w http.ResponseWriter, h *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	w.Write(models.InsertPlayer(
-		team,
-		championship_id,
-		team_id,
-	))
+	w.Write(models.InsertPlayer(player))
 }
 
 func GetPlayer(w http.ResponseWriter, h *http.Request)  {

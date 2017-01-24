@@ -30,10 +30,6 @@
 
     >`http://localhost:8080/player/save`
     
-        params
-            -championship_id
-            -team_id
-            
             
 - get player
 

@@ -9,7 +9,7 @@ const AliasName string = "default"
 const NameDriver string = "mysql"
 const Name string = "root"
 const Pass string = "12345"
-const NameDB string = "campeonato"
+const NameDB string = "championship"
 
 const UrlDB string = Name + ":" + Pass + "@/" + NameDB + "?charset=utf8"
 
@@ -20,8 +20,10 @@ func init() {
 	)
 
 	orm.RegisterModel(
+		new(Championship),
 		new(Team),
-		new(Person),
+		new(Team_championship),
+		new(Player),
 	)
 
 	orm.RegisterDataBase(

@@ -24,6 +24,7 @@ func init() {
 		new(Team),
 		new(Team_championship),
 		new(Player),
+		new(Player_team),
 	)
 
 	orm.RegisterDataBase(

@@ -7,7 +7,7 @@ type Team struct {
 	Name string `json:"name" `
 }
 
-func GetListTeam() (mapB []byte) {
+func GetTeamList() (mapB []byte) {
 	var teams []Team
 
 	ORM().QueryTable("team").
@@ -15,6 +15,16 @@ func GetListTeam() (mapB []byte) {
 		All(&teams)
 
 	mapB, _ = json.Marshal(teams)
+	return
+}
+
+func GetTeam(id string) (mapB []byte)  {
+	var team Team
+	ORM().QueryTable("team").
+		Filter("id", id).
+		OrderBy("Id").
+		All(&team)
+	mapB, _ = json.Marshal(team)
 	return
 }
 

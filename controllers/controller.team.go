@@ -8,12 +8,12 @@ import (
 	"championship-football/tools"
 )
 
-func GetListTeam(w http.ResponseWriter, h *http.Request) {
+func GetTeamList(w http.ResponseWriter, h *http.Request) {
 
 	LogChampionship("GET", "/team/list", strconv.Itoa(http.StatusOK))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(models.GetListTeam())
+	w.Write(models.GetTeamList())
 }
 
 func SaveTeam(w http.ResponseWriter, h *http.Request)  {
@@ -47,8 +47,10 @@ func SaveTeam(w http.ResponseWriter, h *http.Request)  {
 
 func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request){
 	LogChampionship("GET", "team/getFromChampionship", strconv.Itoa(http.StatusOK))
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+
 	w.Write(models.GetTeamsFromChampionship(h.URL.Query().Get("id_championship")))
 }
 

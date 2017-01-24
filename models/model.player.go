@@ -24,7 +24,7 @@ func GetPerson() []byte {
 	return GetJsonPerson(person)
 }
 
-func GetPersonTeam(filter_team_id int) []byte {
+func GetPersonTeam(filter_team_id string) []byte {
 	var person []Person
 
 	ORM().QueryTable("person").

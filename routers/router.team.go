@@ -28,4 +28,9 @@ func RouterTeam(championship *mux.Router)  {
 		controllers.AssingTeamToChampionship,
 	).Methods("POST")
 
+	championship.HandleFunc(
+		"/team/asignarEquipos",
+		controllers.AsignarEquiposAleatorios,
+	).Methods("GET")
+
 }

@@ -51,4 +51,13 @@ func AssingTeamToChampionship(w http.ResponseWriter, h *http.Request)  {
 	w.Write(models.InsertTeamChampionship(team_championship))
 }
 
+func AsignarEquiposAleatorios(w http.ResponseWriter, h *http.Request) {
+
+	LogChampionship("GET", "team/asignarEquipos", strconv.Itoa(http.StatusOK))
+
+	w = Set_ResponseWrite(w)
+	w.Write(models.AsignarEquipos(h.URL.Query().Get("championship_id")))
+
+}
+
 

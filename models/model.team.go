@@ -2,6 +2,7 @@ package models
 
 import (
 	"encoding/json"
+	"github.com/astaxie/beego/orm"
 )
 
 type Team struct {
@@ -32,4 +33,22 @@ func GetTeam(id string) (mapB []byte)  {
 
 func InsertTeam(team Team) []byte {
 	return ORM_INSERT(team)
+}
+
+func GetTeam16() (mapB []byte) {
+	var listValues []orm.ParamsList
+	var teams []Team
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+	qb.Select("*").From("team").OrderBy("RAND()").Limit(16)
+	ORM().Raw(qb.String()).ValuesList(&listValues)
+
+	for _, element := range listValues{
+		teams = append(teams, Team{
+			Name:element[1].(string),
+			Id:element[0].(string),
+		})
+	}
+	mapB, _ = json.Marshal(teams)
+	return
 }

@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/fatih/color"
 	"log"
+	"net/http"
 )
 
 func LogChampionship(
@@ -21,4 +22,10 @@ func LogChampionship(
 	} else {
 		log.Println(green("POST ") + "----> " + yellow("localhost:8080" + url) + " ===> " + cyan(status))
 	}
+}
+
+func Set_ResponseWrite(w http.ResponseWriter) http.ResponseWriter {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	return w
 }

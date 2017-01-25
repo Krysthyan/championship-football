@@ -1,7 +1,6 @@
 package models
 
 import (
-	"championship-football/tools"
 	"encoding/json"
 )
 
@@ -15,19 +14,8 @@ type Player struct {
 }
 
 
-func InsertPlayer(player Player) (mapB []byte) {
-	var error_list []tools.ErrorChampionship
-
-	_, err_tx := ORM().Insert(&player)
-	tools.ListError(&error_list, err_tx)
-
-	if len(error_list) != 0 {
-		mapB, _ = json.Marshal(error_list)
-	}else {
-		mapB, _ = json.Marshal(player)
-	}
-
-	return
+func InsertPlayer(player Player) []byte {
+	return ORM_INSERT(player)
 }
 
 func GetPlayer(id string) (mapB []byte)  {
@@ -42,3 +30,4 @@ func GetPlayer(id string) (mapB []byte)  {
 
 	return
 }
+

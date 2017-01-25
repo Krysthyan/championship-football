@@ -3,13 +3,13 @@ package models
 import "encoding/json"
 
 type Team_championship struct {
-	Championship_id string`orm:"pk;ref(fk)"`
-	Team_id string `orm:"ref(fk)"`
+	Championship_id string`json:"championship_id" orm:"pk;ref(fk)"`
+	Team_id string `json:"team_id" orm:"ref(fk)"`
 
 }
 
-func InsertTeamChampionship(team_championship Team_championship)  {
-	ORM().Insert(&team_championship)
+func InsertTeamChampionship(team_championship Team_championship) []byte {
+	return ORM_INSERT(team_championship)
 }
 
 func GetTeamsFromChampionship(id string) (mapB []byte)  {

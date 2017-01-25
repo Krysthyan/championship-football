@@ -1,20 +1,17 @@
 package models
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type Player_team struct {
-	Team_id string `orm:"pk; ref(fk)"`
-	Player_id string `orm:"ref(fk)"`
-	Championship_id string `orm:"ref(fk)"`
+	Team_id string `json:"team_id" orm:"pk; ref(fk)"`
+	Player_id string `json:"player_id" orm:"ref(fk)"`
+	Championship_id string `json:"championship_id" orm:"ref(fk)"`
 }
 
-func InsertPlayerTeam(player_team Player_team) (err error) {
-	_, err = ORM().Insert(&player_team)
-
-	if err != nil{
-		return err
-	}
-	return
+func InsertPlayerTeam(player_team Player_team) []byte {
+	return ORM_INSERT(player_team)
 }
 
 func GetPlayersFromTeam(id_team, id_championship string) (mapB []byte) {

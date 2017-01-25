@@ -92,7 +92,6 @@ func getPlayerTeam(interface_ interface{}) *Player_team {
 
 	jsons, _ := json.Marshal(interface_)
 	json.Unmarshal(jsons, &model)
-	log.Println(model)
 	return &model
 }
 func getTeamChampionship(interface_ interface{}) *Team_championship {
@@ -100,6 +99,5 @@ func getTeamChampionship(interface_ interface{}) *Team_championship {
 
 	jsons, _ := json.Marshal(interface_)
 	json.Unmarshal(jsons, &model)
-	log.Println(model)
 	return &model
 }

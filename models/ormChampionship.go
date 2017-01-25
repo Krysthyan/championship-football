@@ -6,7 +6,6 @@ import (
 	"championship-football/tools"
 	"encoding/json"
 	"github.com/fatih/structs"
-	"log"
 )
 
 const AliasName string = "default"

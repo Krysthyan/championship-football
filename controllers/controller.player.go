@@ -52,3 +52,11 @@ func AssingPlayerToTeam(w http.ResponseWriter, h *http.Request)  {
 	w.Write(models.InsertPlayerTeam(player_team))
 }
 
+func GetPlayerList(w http.ResponseWriter, h *http.Request) {
+	LogChampionship("GET", "player/getList", strconv.Itoa(http.StatusOK))
+
+	w = Set_ResponseWrite(w)
+	w.Write(models.GetPlayerList())
+
+}
+

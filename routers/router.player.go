@@ -25,4 +25,9 @@ func RouterPerson(championship *mux.Router)  {
 		"/player/assingPlayerToTeam",
 		controllers.AssingPlayerToTeam,
 	).Methods("POST")
+
+	championship.HandleFunc(
+		"/player/getList",
+		controllers.GetPlayerList,
+	).Methods("GET")
 }

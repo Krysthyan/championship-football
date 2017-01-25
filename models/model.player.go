@@ -31,3 +31,12 @@ func GetPlayer(id string) (mapB []byte)  {
 	return
 }
 
+func GetPlayerList() (mapB []byte) {
+	var players []Player
+
+	ORM().QueryTable("player").
+	OrderBy("Id").All(&players)
+
+	mapB, _= json.Marshal(players)
+	return
+}

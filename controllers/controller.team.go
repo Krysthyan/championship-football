@@ -7,6 +7,8 @@ import (
 	"encoding/json"
 	"championship-football/tools"
 	"log"
+	"github.com/icrowley/fake"
+	"reflect"
 )
 
 func GetTeamList(w http.ResponseWriter, h *http.Request) {
@@ -60,4 +62,28 @@ func AsignarEquiposAleatorios(w http.ResponseWriter, h *http.Request) {
 
 }
 
+func AddTeamsRandom(w http.ResponseWriter, h *http.Request) {
+
+	LogChampionship("GET", "team/addTeamsRamdon", strconv.Itoa(http.StatusOK))
+
+	numberElements, _:= strconv.Atoi(h.URL.Query().Get("num_team"))
+	var teams []interface{}
+	var team models.Team
+	var return_orm interface{}
+	for numberElements > 0 {
+
+		team.Id = tools.ChampionshipToken(3)
+		team.Name = fake.City()
+		json.Unmarshal(models.InsertTeam(team), &return_orm)
+
+		if reflect.ValueOf(return_orm).Len() > 1 {
+			teams = append(teams, return_orm)
+			numberElements --
+		}
+	}
+
+	return_json, _:= json.Marshal(teams)
+	w = Set_ResponseWrite(w)
+	w.Write(return_json)
+}
 

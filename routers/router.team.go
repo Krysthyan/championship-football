@@ -33,4 +33,9 @@ func RouterTeam(championship *mux.Router)  {
 		controllers.AsignarEquiposAleatorios,
 	).Methods("GET")
 
+	championship.HandleFunc(
+		"/team/addTeamsRamdon",
+		controllers.AddTeamsRandom,
+	).Methods("GET")
+
 }

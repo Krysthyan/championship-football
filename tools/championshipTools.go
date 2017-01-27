@@ -1,10 +1,11 @@
 package tools
 
 import (
-	"github.com/nkanish2002/token_generator"
 	"strings"
 	"strconv"
 	"github.com/fatih/structs"
+	"fmt"
+	"crypto/rand"
 )
 
 type ErrorChampionship struct {
@@ -12,9 +13,9 @@ type ErrorChampionship struct {
 }
 
 func ChampionshipToken(size int) string {
-	g := token_generator.Generator{}
-	g.New()
-	return strings.ToUpper(g.GetToken(size))
+	b := make([]byte, size)
+	rand.Read(b)
+	return strings.ToUpper(fmt.Sprintf("%x", b))
 }
 
 func ChampionshipError(err error, structCham interface{}) (num_err string) {

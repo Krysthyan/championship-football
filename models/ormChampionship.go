@@ -6,6 +6,7 @@ import (
 	"championship-football/tools"
 	"encoding/json"
 	"github.com/fatih/structs"
+	"reflect"
 )
 
 const AliasName string = "default"
@@ -48,17 +49,19 @@ func ORM_INSERT(model interface{}) (mapB []byte) {
 	var error_list []tools.ErrorChampionship
 	var err_tx error
 
-	name_struct := structs.Name(model)
-
-	switch name_struct {
+	switch structs.Name(model) {
 	case "Player":
-		_, err_tx = ORM().Insert(getPlayer(model))
+		modelOrm := reflect.ValueOf(model).Interface().(Player)
+		_, err_tx = ORM().Insert(&modelOrm)
 	case "Team":
-		_, err_tx = ORM().Insert(getTeam(model))
+		modelOrm := reflect.ValueOf(model).Interface().(Team)
+		_, err_tx = ORM().Insert(&modelOrm)
 	case "Player_team":
-		_, err_tx = ORM().Insert(getPlayerTeam(model))
+		modelOrm := reflect.ValueOf(model).Interface().(Player_team)
+		_, err_tx = ORM().Insert(&modelOrm)
 	case "Team_championship":
-		_, err_tx = ORM().Insert(getTeamChampionship(model))
+		modelOrm := reflect.ValueOf(model).Interface().(Team_championship)
+		_, err_tx = ORM().Insert(&modelOrm)
 
 	}
 	tools.ListError(&error_list, err_tx)
@@ -70,33 +73,4 @@ func ORM_INSERT(model interface{}) (mapB []byte) {
 	}
 
 	return
-}
-
-func getPlayer(interface_ interface{}) *Player {
-	var model Player
-
-	jsons, _ := json.Marshal(interface_)
-	json.Unmarshal(jsons, &model)
-	return &model
-}
-func getTeam(interface_ interface{}) *Team {
-	var model Team
-
-	jsons, _ := json.Marshal(interface_)
-	json.Unmarshal(jsons, &model)
-	return &model
-}
-func getPlayerTeam(interface_ interface{}) *Player_team {
-	var model Player_team
-
-	jsons, _ := json.Marshal(interface_)
-	json.Unmarshal(jsons, &model)
-	return &model
-}
-func getTeamChampionship(interface_ interface{}) *Team_championship {
-	var model Team_championship
-
-	jsons, _ := json.Marshal(interface_)
-	json.Unmarshal(jsons, &model)
-	return &model
 }

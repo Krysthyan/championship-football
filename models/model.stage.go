@@ -27,8 +27,8 @@ func InsertStage(stage Stage) []byte {
 func GenerateFaseGrupos(teams []Team, championship_id string) (mapB []byte) {
 	var listErrors []tools.ErrorChampionship
 	var listTeamStage []ListTeamStage
-	n := float64(len(teams))
-	x := math.Log(n) / math.Log(2)
+
+	x := math.Log(float64(len(teams))) / math.Log(2)
 
 	if (x-float64(int(x))) == 0 && (int(x) > 2){
 

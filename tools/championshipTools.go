@@ -1,11 +1,11 @@
 package tools
 
 import (
-	"strings"
-	"strconv"
-	"github.com/fatih/structs"
-	"fmt"
 	"crypto/rand"
+	"fmt"
+	"github.com/fatih/structs"
+	"strconv"
+	"strings"
 )
 
 type ErrorChampionship struct {
@@ -21,20 +21,20 @@ func ChampionshipToken(size int) string {
 func ChampionshipError(err error, structCham interface{}) (num_err string) {
 
 	if err != nil {
-		typeErr,_:= strconv.Atoi(
+		typeErr, _ := strconv.Atoi(
 			strings.Split(
 				strings.Split(
 					err.Error(),
 					" ")[1],
 				":")[0])
-	num_err = GetTypeError(typeErr, structs.Name(structCham))
+		num_err = GetTypeError(typeErr, structs.Name(structCham))
 	}
 	return
 }
 
 func ListError(list *[]ErrorChampionship, err error) {
 	if err != nil {
-		*list = append(*list, ErrorChampionship{Error:err.Error()})
+		*list = append(*list, ErrorChampionship{Error: err.Error()})
 	}
 }
 
@@ -45,4 +45,19 @@ func GetTypeError(err int, typeStruct string) string {
 	}
 	return string(err)
 
+}
+
+func GetPositionPlayer(valid_string string) (position string) {
+
+	valid, _ := strconv.Atoi(valid_string)
+	if valid >= 0 && valid <= 1 {
+		position = "Arquero"
+	} else if valid >= 2 && valid <= 4 {
+		position = "Defensa"
+	} else if valid >= 5 && valid <= 7 {
+		position = "Mediocampista"
+	} else if valid >= 8 && valid <= 10 {
+		position = "Delantero"
+	}
+	return
 }

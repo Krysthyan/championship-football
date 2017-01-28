@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	"net/http"
-	"strconv"
 	"championship-football/models"
-	"encoding/json"
 	"championship-football/tools"
-	"log"
+	"encoding/json"
 	"github.com/icrowley/fake"
+	"log"
+	"net/http"
 	"reflect"
+	"strconv"
 )
 
 func GetTeamList(w http.ResponseWriter, h *http.Request) {
@@ -19,7 +19,7 @@ func GetTeamList(w http.ResponseWriter, h *http.Request) {
 	w.Write(models.GetTeamList())
 }
 
-func SaveTeam(w http.ResponseWriter, h *http.Request)  {
+func SaveTeam(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "team/save", strconv.Itoa(http.StatusOK))
 	var team models.Team
 
@@ -34,14 +34,14 @@ func SaveTeam(w http.ResponseWriter, h *http.Request)  {
 	w.Write(models.InsertTeam(team))
 }
 
-func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request){
+func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("GET", "team/getFromChampionship", strconv.Itoa(http.StatusOK))
 
 	w = Set_ResponseWrite(w)
 	w.Write(models.GetTeamsFromChampionship(h.URL.Query().Get("championship_id")))
 }
 
-func AssingTeamToChampionship(w http.ResponseWriter, h *http.Request)  {
+func AssingTeamToChampionship(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "team/assingTeamToChampionship", strconv.Itoa(http.StatusOK))
 	var team_championship models.Team_championship
 	err := json.NewDecoder(h.Body).Decode(&team_championship)
@@ -66,7 +66,7 @@ func AddTeamsRandom(w http.ResponseWriter, h *http.Request) {
 
 	LogChampionship("GET", "team/addTeamsRamdon", strconv.Itoa(http.StatusOK))
 
-	numberElements, _:= strconv.Atoi(h.URL.Query().Get("num_team"))
+	numberElements, _ := strconv.Atoi(h.URL.Query().Get("num_team"))
 	var teams []interface{}
 	var team models.Team
 	var return_orm interface{}
@@ -78,12 +78,11 @@ func AddTeamsRandom(w http.ResponseWriter, h *http.Request) {
 
 		if reflect.ValueOf(return_orm).Len() > 1 {
 			teams = append(teams, return_orm)
-			numberElements --
+			numberElements--
 		}
 	}
 
-	return_json, _:= json.Marshal(teams)
+	return_json, _ := json.Marshal(teams)
 	w = Set_ResponseWrite(w)
 	w.Write(return_json)
 }
-

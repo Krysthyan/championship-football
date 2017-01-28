@@ -1,11 +1,11 @@
 package models
 
 import (
-	"github.com/astaxie/beego/orm"
-	_ "github.com/go-sql-driver/mysql"
 	"championship-football/tools"
 	"encoding/json"
+	"github.com/astaxie/beego/orm"
 	"github.com/fatih/structs"
+	_ "github.com/go-sql-driver/mysql"
 	"reflect"
 )
 
@@ -68,7 +68,7 @@ func ORM_INSERT(model interface{}) (mapB []byte) {
 
 	if len(error_list) != 0 {
 		mapB, _ = json.Marshal(error_list)
-	}else {
+	} else {
 		mapB, _ = json.Marshal(model)
 	}
 

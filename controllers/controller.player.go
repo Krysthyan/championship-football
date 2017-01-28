@@ -2,12 +2,12 @@ package controllers
 
 import (
 	"championship-football/models"
-	"net/http"
-	"strconv"
 	"encoding/json"
 	"log"
+	"net/http"
+	"reflect"
+	"strconv"
 )
-
 
 func InsertPlayer(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "player/save", strconv.Itoa(http.StatusOK))
@@ -23,14 +23,14 @@ func InsertPlayer(w http.ResponseWriter, h *http.Request) {
 	w.Write(models.InsertPlayer(player))
 }
 
-func GetPlayer(w http.ResponseWriter, h *http.Request)  {
+func GetPlayer(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("GET", "player/get", strconv.Itoa(http.StatusOK))
 
 	w = Set_ResponseWrite(w)
 	w.Write(models.GetPlayer(h.URL.Query().Get("player_id")))
 }
 
-func GetPlayersFromTeam(w http.ResponseWriter, h *http.Request)  {
+func GetPlayersFromTeam(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("GET", "player/getFromTeam", strconv.Itoa(http.StatusOK))
 
 	w = Set_ResponseWrite(w)
@@ -40,7 +40,7 @@ func GetPlayersFromTeam(w http.ResponseWriter, h *http.Request)  {
 	))
 }
 
-func AssingPlayerToTeam(w http.ResponseWriter, h *http.Request)  {
+func AssingPlayerToTeam(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "player/assingPlayerToTeam", strconv.Itoa(http.StatusOK))
 	var player_team models.Player_team
 	err := json.NewDecoder(h.Body).Decode(&player_team)
@@ -60,3 +60,33 @@ func GetPlayerList(w http.ResponseWriter, h *http.Request) {
 
 }
 
+func AddPlayersRandom(w http.ResponseWriter, h *http.Request) {
+
+	LogChampionship("GET", "player/addPlayersRamdon", strconv.Itoa(http.StatusOK))
+
+	numberElements, _ := strconv.Atoi(h.URL.Query().Get("num_players"))
+	var players []interface{}
+	var return_orm interface{}
+	for numberElements > 0 {
+
+		json.Unmarshal(models.InsertPlayer(models.GetPlayerRamdon()), &return_orm)
+
+		if reflect.ValueOf(return_orm).Len() > 1 {
+			players = append(players, return_orm)
+			numberElements--
+		}
+	}
+
+	return_json, _ := json.Marshal(players)
+	w = Set_ResponseWrite(w)
+	w.Write(return_json)
+}
+
+func GetPlayerListRandom(w http.ResponseWriter, h *http.Request) {
+	LogChampionship("GET", "player/getPlayerListRandom", strconv.Itoa(http.StatusOK))
+	numberElements, _ := strconv.Atoi(h.URL.Query().Get("num_players"))
+
+	w = Set_ResponseWrite(w)
+
+	w.Write(models.GetPlayerListRamdon(numberElements))
+}

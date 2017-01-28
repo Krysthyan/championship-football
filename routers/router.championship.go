@@ -1,11 +1,11 @@
 package routers
 
 import (
-	"github.com/gorilla/mux"
 	"championship-football/controllers"
+	"github.com/gorilla/mux"
 )
 
-func RouterChampionship(championship *mux.Router)  {
+func RouterChampionship(championship *mux.Router) {
 	championship.HandleFunc(
 		"/championship/save",
 		controllers.InsertChampionship,

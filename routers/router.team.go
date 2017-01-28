@@ -1,12 +1,11 @@
 package routers
 
 import (
-	"github.com/gorilla/mux"
 	"championship-football/controllers"
+	"github.com/gorilla/mux"
 )
 
-
-func RouterTeam(championship *mux.Router)  {
+func RouterTeam(championship *mux.Router) {
 
 	championship.HandleFunc(
 		"/team/list",

@@ -6,7 +6,7 @@ import (
 )
 
 type Team struct {
-	Id   string    `json:"id" orm:"pk"`
+	Id   string `json:"id" orm:"pk"`
 	Name string `json:"name" `
 }
 
@@ -21,7 +21,7 @@ func GetTeamList() (mapB []byte) {
 	return
 }
 
-func GetTeam(id string) (mapB []byte)  {
+func GetTeam(id string) (mapB []byte) {
 	var team Team
 	ORM().QueryTable("team").
 		Filter("id", id).
@@ -43,10 +43,10 @@ func GetTeam16() (mapB []byte) {
 	qb.Select("*").From("team").OrderBy("RAND()").Limit(16)
 	ORM().Raw(qb.String()).ValuesList(&listValues)
 
-	for _, element := range listValues{
+	for _, element := range listValues {
 		teams = append(teams, Team{
-			Name:element[1].(string),
-			Id:element[0].(string),
+			Name: element[1].(string),
+			Id:   element[0].(string),
 		})
 	}
 	mapB, _ = json.Marshal(teams)

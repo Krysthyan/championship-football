@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"net/http"
-	"strconv"
 	"championship-football/models"
+	"championship-football/tools"
 	"encoding/json"
 	"log"
-	"championship-football/tools"
+	"net/http"
+	"strconv"
 )
 
 func InsertChampionship(w http.ResponseWriter, h *http.Request) {
@@ -23,21 +23,21 @@ func InsertChampionship(w http.ResponseWriter, h *http.Request) {
 	w.Write(models.SaveChampionship(championship))
 }
 
-func GetChampionship(w http.ResponseWriter, h *http.Request)  {
+func GetChampionship(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("GET", "championship/get", strconv.Itoa(http.StatusOK))
 
 	w = Set_ResponseWrite(w)
 	w.Write(models.GetChampionship(h.URL.Query().Get("id")))
 }
 
-func GetChampionshipList(w http.ResponseWriter, h *http.Request)  {
+func GetChampionshipList(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("GET", "championship/getList", strconv.Itoa(http.StatusOK))
 
 	w = Set_ResponseWrite(w)
 	w.Write(models.GetChampionshipList())
 }
 
-func DeleteChampionship(w http.ResponseWriter, h *http.Request)  {
+func DeleteChampionship(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("DELETE", "championship/delete", strconv.Itoa(http.StatusOK))
 
 	var championship models.Championship

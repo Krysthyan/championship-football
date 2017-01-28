@@ -4,7 +4,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func InitRouter(championship *mux.Router)  {
+func InitRouter(championship *mux.Router) {
 
 	RouterTeam(championship)
 	RouterPerson(championship)

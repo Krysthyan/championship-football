@@ -18,6 +18,13 @@
 
         params
             - championship_id
+            
+- Agregar equipos automáticamente pasando un numero de equipos a guardar
+ 
+    > `http://localhost:8080/team/addTeamsRamdon`
+
+        params
+            - num_team
 
 
 ## Player

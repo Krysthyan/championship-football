@@ -1,11 +1,11 @@
 package routers
 
 import (
-	"github.com/gorilla/mux"
 	"championship-football/controllers"
+	"github.com/gorilla/mux"
 )
 
-func RouterPerson(championship *mux.Router)  {
+func RouterPerson(championship *mux.Router) {
 	championship.HandleFunc(
 		"/player/save",
 		controllers.InsertPlayer,
@@ -30,4 +30,14 @@ func RouterPerson(championship *mux.Router)  {
 		"/player/getList",
 		controllers.GetPlayerList,
 	).Methods("GET")
+
+	championship.HandleFunc(
+		"/player/addPlayersRandom",
+		controllers.AddPlayersRandom,
+	)
+
+	championship.HandleFunc(
+		"/player/getPlayerListRandom",
+		controllers.GetPlayerListRandom,
+	)
 }

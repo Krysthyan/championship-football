@@ -25,9 +25,9 @@ func SaveTeam(w http.ResponseWriter, h *http.Request) {
 
 	err := json.NewDecoder(h.Body).Decode(&team)
 
-	if err != nil {
-		panic(err)
-	}
+		if err != nil {
+			panic(err)
+		}
 	team.Id = tools.ChampionshipToken(5)
 
 	w = Set_ResponseWrite(w)
@@ -43,14 +43,27 @@ func GetTeamsFromChampionship(w http.ResponseWriter, h *http.Request) {
 
 func AssingTeamToChampionship(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "team/assingTeamToChampionship", strconv.Itoa(http.StatusOK))
-	var team_championship models.Team_championship
-	err := json.NewDecoder(h.Body).Decode(&team_championship)
+	var listTeam_championship []models.Team_championship
+	var team []models.Team
+	 // comprobar que pasa si se envia solamente un equipo.
+	err := json.NewDecoder(h.Body).Decode(&team)
+	championship_id := h.URL.Query().Get("championship_id")
 
+	for _, element := range team{
+		var team_championship models.Team_championship
+		json_ := models.InsertTeamChampionship(models.Team_championship{
+			Team_id:element.Id,
+			Championship_id:championship_id,
+		})
+		json.Unmarshal(json_,&team_championship)
+		listTeam_championship = append(listTeam_championship,team_championship)
+	}
 	if err != nil {
 		log.Println(err)
 	}
 	w = Set_ResponseWrite(w)
-	w.Write(models.InsertTeamChampionship(team_championship))
+	mapB, _ := json.Marshal(listTeam_championship)
+	w.Write(mapB)
 }
 
 func AsignarEquiposAleatorios(w http.ResponseWriter, h *http.Request) {

@@ -9,5 +9,6 @@ func InitRouter(championship *mux.Router) {
 	RouterTeam(championship)
 	RouterPerson(championship)
 	RouterChampionship(championship)
+	RouterStage(championship)
 
 }

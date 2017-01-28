@@ -30,7 +30,7 @@ func GenerateFaseGrupos(teams []Team, championship_id string) (mapB []byte) {
 
 	x := math.Log(float64(len(teams))) / math.Log(2)
 
-	if (x-float64(int(x))) == 0 && (int(x) > 2){
+	if (x - float64(int(x)) ) == 0 && (int(x) > 2){
 
 		var stage Stage
 		newSource := rand.NewSource(time.Now().Unix())

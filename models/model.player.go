@@ -83,3 +83,17 @@ func GetPlayerListRamdon(size int) (mapB []byte) {
 
 	return
 }
+
+func GetPlayerRamdonDB() Player {
+	var listValues []orm.ParamsList
+
+	var player Player
+	qb, _ := orm.NewQueryBuilder("mysql")
+	qb.Select("*").From("player").OrderBy("RAND()").Limit(1)
+
+	ORM().Raw(qb.String()).ValuesList(&listValues)
+
+	player.Id = listValues[0][0].(string)
+
+	return player
+}

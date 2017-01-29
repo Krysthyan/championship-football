@@ -10,4 +10,9 @@ func RouterStage(championship *mux.Router)  {
 		"/stage/generateStage",
 		controllers.GenerateStage,
 	).Methods("POST")
+
+	championship.HandleFunc(
+		"/stage/playGroup",
+		controllers.PlayGroupController,
+	).Methods("GET")
 }

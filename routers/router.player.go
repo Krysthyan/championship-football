@@ -34,10 +34,10 @@ func RouterPerson(championship *mux.Router) {
 	championship.HandleFunc(
 		"/player/addPlayersRandom",
 		controllers.AddPlayersRandom,
-	)
+	).Methods("GET")
 
 	championship.HandleFunc(
 		"/player/getPlayerListRandom",
 		controllers.GetPlayerListRandom,
-	)
+	).Methods("GET")
 }

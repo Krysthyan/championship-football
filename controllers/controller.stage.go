@@ -22,3 +22,14 @@ func GenerateStage(w http.ResponseWriter, h *http.Request) {
 	w.Write(models.GenerateFaseGrupos(teams, championship_id ))
 
 }
+
+func PlayGroupController(w http.ResponseWriter, h *http.Request) {
+	LogChampionship("GET", "stage/playGroup", strconv.Itoa(http.StatusOK))
+
+	championship_id := h.URL.Query().Get("championship_id")
+
+	w = Set_ResponseWrite(w)
+
+	w.Write(models.PlayARound(championship_id))
+
+}

@@ -31,6 +31,8 @@ func init() {
 		new(Player_team),
 		new(Stage),
 		new(Team_stage),
+		new(Match),
+		new(Goal),
 	)
 
 	orm.RegisterDataBase(
@@ -69,6 +71,12 @@ func ORM_INSERT(model interface{}) (mapB []byte) {
 		_, err_tx = ORM().Insert(&modelOrm)
 	case "Team_stage":
 		modelOrm := reflect.ValueOf(model).Interface().(Team_stage)
+		_, err_tx = ORM().Insert(&modelOrm)
+	case "Match":
+		modelOrm := reflect.ValueOf(model).Interface().(Match)
+		_, err_tx = ORM().Insert(&modelOrm)
+	case "Goal":
+		modelOrm := reflect.ValueOf(model).Interface().(Goal)
 		_, err_tx = ORM().Insert(&modelOrm)
 	}
 

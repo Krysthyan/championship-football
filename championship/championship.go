@@ -17,9 +17,9 @@ func Run() {
 	server := &http.Server{
 		Addr:           ":8080",
 		Handler:        championship,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		ReadTimeout:    30 * time.Second,
+		WriteTimeout:   30 * time.Second,
+		MaxHeaderBytes: 1 << 50,
 	}
 
 	LogMain()

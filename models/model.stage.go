@@ -45,15 +45,18 @@ func GenerateFaseGrupos(teams []Team, championship_id string) (mapB []byte) {
 
 	if (x - float64(int(x)) ) == 0 && (int(x) > 2){
 
-		var stage Stage
 		newSource := rand.NewSource(time.Now().Unix())
 		randNew := rand.New(newSource)
 		var isNewGoup int
+
 		var teams_alt []Team
+		var stage Stage
+
 		for len(teams) > 0 {
 			ramdon := randNew.Intn(len(teams))
 
 			if isNewGoup == 0 || isNewGoup == 4 {
+
 				if isNewGoup == 4 {
 					listTeamStage = append(listTeamStage, ListTeamStage{
 						Id:stage.Id,
@@ -65,6 +68,7 @@ func GenerateFaseGrupos(teams []Team, championship_id string) (mapB []byte) {
 				json.Unmarshal(InsertStage(GetNewStage(championship_id)),&stage)
 				isNewGoup = 0
 			}
+
 			team := teams[ramdon]
 			InsertTeamStage(Team_stage{
 				Stage_id:stage.Id,
@@ -74,8 +78,6 @@ func GenerateFaseGrupos(teams []Team, championship_id string) (mapB []byte) {
 			teams = append(teams[:ramdon],teams[ramdon+1:]...)
 			teams_alt = append(teams_alt, team)
 			isNewGoup++
-
-
 		}
 		listTeamStage = append(listTeamStage, ListTeamStage{
 			Id:stage.Id,
@@ -85,7 +87,6 @@ func GenerateFaseGrupos(teams []Team, championship_id string) (mapB []byte) {
 
 		tools.ListError(&listErrors, errors.New("No se ha ingresado el " +
 			"número permitido de equipos, ejm 8, 16, 32, 64 ..."))
-
 	}
 
 	if len(listErrors) == 0 {
@@ -120,67 +121,56 @@ func PlayARound(Championship_id string) (mapB []byte) {
 func Play(combination Combinations, Stage_id string, Championship_id string) {
 	rand.Seed(time.Now().UnixNano())
 
-	var match Match
 	goalEquipo1 := rand.Intn(5)
 	goalEquipo2 := rand.Intn(5)
 
-	match_id := tools.ChampionshipToken(3)
+	var match Match
+	match.Id = tools.ChampionshipToken(3)
+	match.Is_draw = 0
+	match.Stage_id = Stage_id
+
 	log.Println(goalEquipo1, goalEquipo2)
+
 	if goalEquipo1 > goalEquipo2 {
-		json.Unmarshal(InsertMatch(Match{
-			Id:match_id,
-			Team_winner:combination.team1.Id,
-			Team_losser:combination.team2.Id,
-			Is_draw:0,
-			Stage_id:Stage_id,
-		}),&match)
+
+		match.Team_winner = combination.team1.Id
+		match.Team_losser = combination.team2.Id
+
 	} else if goalEquipo1 < goalEquipo2 {
-		json.Unmarshal(InsertMatch(Match{
-			Id:match_id,
-			Team_winner:combination.team2.Id,
-			Team_losser:combination.team1.Id,
-			Is_draw:0,
-			Stage_id:Stage_id,
-		}),&match)
+
+		match.Team_winner = combination.team2.Id
+		match.Team_losser = combination.team1.Id
+
 	}else {
-		json.Unmarshal(InsertMatch(Match{
-			Id:match_id,
-			Team_winner:combination.team1.Id,
-			Team_losser:combination.team2.Id,
-			Is_draw:1,
-			Stage_id:Stage_id,
-		}),&match)
+		match.Is_draw = 1
+		match.Team_winner = combination.team1.Id
+		match.Team_losser = combination.team2.Id
 	}
+
+	json.Unmarshal(InsertMatch(match),&match)
 
 	for index:=0 ; index < goalEquipo1; index++ {
-		player_id := GetIdplayerRamdonDB(combination.team1.Id, Championship_id )
-		goal := Goal{
-			Match_id:match.Id,
-			Player_id:player_id,
-		}
-		if IsExistPlayerGoal(goal){
-			UpdateGoal(goal)
-		}else {
-			goal.Number_goals = 1
-			InsertGoal(goal)
-		}
-
-
+		SaveUpdateGoal(match.Id, combination.team1.Id, Championship_id)
 	}
 	for index:=0 ; index < goalEquipo2; index++ {
-		player_id := GetIdplayerRamdonDB(combination.team2.Id, Championship_id )
-		goal := Goal{
-			Match_id:match.Id,
-			Player_id:player_id,
-		}
-		if IsExistPlayerGoal(goal){
-			UpdateGoal(goal)
-		}else {
-			goal.Number_goals = 1
-			InsertGoal(goal)
-		}
+		SaveUpdateGoal(match.Id, combination.team2.Id, Championship_id)
 	}
 
+}
+
+
+func SaveUpdateGoal(Match_id string, Team_id string, Championship_id string)  {
+	player_id := GetIdplayerRamdonDB(Team_id, Championship_id )
+	goal := Goal{
+		Match_id:Match_id,
+		Player_id:player_id,
+	}
+	if IsExistPlayerGoal(goal){
+		UpdateGoal(goal)
+	}else {
+		goal.Number_goals = 1
+		InsertGoal(goal)
+	}
 }
 
 func GetListStageFromTeam(Championship_id string) (mapB []byte) {

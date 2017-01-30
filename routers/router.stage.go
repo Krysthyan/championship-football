@@ -15,4 +15,14 @@ func RouterStage(championship *mux.Router)  {
 		"/stage/playGroup",
 		controllers.PlayGroupController,
 	).Methods("GET")
+
+	championship.HandleFunc(
+		"/stage/getListChampionship",
+		controllers.GetListStageFromChampionship,
+	).Methods("GET")
+
+	championship.HandleFunc(
+		"/stage/getTablaPosicion",
+		controllers.GetTablePosicion,
+	).Methods("GET")
 }

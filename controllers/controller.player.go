@@ -43,15 +43,20 @@ func GetPlayersFromTeam(w http.ResponseWriter, h *http.Request) {
 func AssingPlayerToTeam(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("POST", "player/assingPlayerToTeam", strconv.Itoa(http.StatusOK))
 	var teams []models.Team
+	var return_orm []interface{}
 	json.NewDecoder(h.Body).Decode(&teams)
 	numberElements, _ := strconv.Atoi(h.URL.Query().Get("num_players"))
 	championship_id := h.URL.Query().Get("championship_id")
 
 	for _, team := range teams{
-		models.AssingPlayersTeams(team, championship_id,numberElements)
+		var orm interface{}
+		json.Unmarshal(models.AssingPlayersTeams(team, championship_id,numberElements),&orm)
+		return_orm = append(return_orm, orm)
 	}
 
+	mapB, _ := json.Marshal(return_orm)
 	w = Set_ResponseWrite(w)
+	w.Write(mapB)
 
 }
 

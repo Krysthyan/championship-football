@@ -3,7 +3,6 @@ package models
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/orm"
-	"log"
 	"reflect"
 )
 
@@ -51,20 +50,25 @@ func GetIdplayerRamdonDB(Team_id string, Championship_id string) (player_id stri
 	return
 }
 
-func AssingPlayersTeams(team Team, Championship_id string, numAssingPlayers int) {
-	var return_orm interface{}
+func AssingPlayersTeams(team Team, Championship_id string, numAssingPlayers int) (mapB []byte) {
+	var return_orm []interface{}
 
 	for numAssingPlayers > 0 {
+
+		var orm interface{}
 		player_team := Player_team{
 			Player_id:GetPlayerRamdonDB().Id,
 			Championship_id:Championship_id,
 			Team_id:team.Id,
 		}
 
-		json.Unmarshal(InsertPlayerTeam(player_team), &return_orm)
+		json.Unmarshal(InsertPlayerTeam(player_team), &orm)
 
-		if reflect.ValueOf(return_orm).Len() > 1 {
+		if reflect.ValueOf(orm).Len() > 1 {
+			return_orm = append(return_orm, orm)
 			numAssingPlayers--
 		}
 	}
+	mapB, _ = json.Marshal(return_orm)
+	return mapB
 }

@@ -29,6 +29,13 @@ func GetChampionship(w http.ResponseWriter, h *http.Request) {
 	w = Set_ResponseWrite(w)
 	w.Write(models.GetChampionship(h.URL.Query().Get("id")))
 }
+func GetChampionshipName(w http.ResponseWriter, h *http.Request)  {
+	LogChampionship("GET", "championship/get", strconv.Itoa(http.StatusOK))
+
+	w = Set_ResponseWrite(w)
+	w.Write(models.GetChampionshipName(h.URL.Query().Get("name")))
+
+}
 
 func GetChampionshipList(w http.ResponseWriter, h *http.Request) {
 	LogChampionship("GET", "championship/getList", strconv.Itoa(http.StatusOK))

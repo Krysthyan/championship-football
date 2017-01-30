@@ -17,6 +17,11 @@ func RouterChampionship(championship *mux.Router) {
 	).Methods("GET")
 
 	championship.HandleFunc(
+		"/championship/getFromName",
+		controllers.GetChampionshipName,
+	).Methods("GET")
+
+	championship.HandleFunc(
 		"/championship/getList",
 		controllers.GetChampionshipList,
 	).Methods("GET")

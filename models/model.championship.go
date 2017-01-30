@@ -31,6 +31,16 @@ func GetChampionship(id string) (mapB []byte) {
 	mapB, _ = json.Marshal(championship)
 	return mapB
 }
+func GetChampionshipName(name string)(mapB []byte) {
+	var championship Championship
+	ORM().QueryTable("championship").
+		Filter("Name", name).
+		OrderBy("Id").
+		One(&championship)
+
+	mapB, _ = json.Marshal(championship)
+	return mapB
+}
 
 func GetChampionshipList() []byte {
 	var championship []Championship

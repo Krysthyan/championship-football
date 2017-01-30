@@ -35,12 +35,12 @@ func InsertTeam(team Team) []byte {
 	return ORM_INSERT(team)
 }
 
-func GetTeam16() (mapB []byte) {
+func GetTeam16(limit int) (mapB []byte) {
 	var listValues []orm.ParamsList
 	var teams []Team
 
 	qb, _ := orm.NewQueryBuilder("mysql")
-	qb.Select("*").From("team").OrderBy("RAND()").Limit(16)
+	qb.Select("*").From("team").OrderBy("RAND()").Limit(limit)
 	ORM().Raw(qb.String()).ValuesList(&listValues)
 
 	for _, element := range listValues {

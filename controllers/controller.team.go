@@ -69,9 +69,9 @@ func AssingTeamToChampionship(w http.ResponseWriter, h *http.Request) {
 func AsignarEquiposAleatorios(w http.ResponseWriter, h *http.Request) {
 
 	LogChampionship("GET", "team/asignarEquipos", strconv.Itoa(http.StatusOK))
-
+	limit, _ := strconv.Atoi(h.URL.Query().Get("num_teams"))
 	w = Set_ResponseWrite(w)
-	w.Write(models.AsignarEquipos(h.URL.Query().Get("championship_id")))
+	w.Write(models.AsignarEquipos(h.URL.Query().Get("championship_id"), limit))
 
 }
 

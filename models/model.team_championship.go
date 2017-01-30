@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strconv"
+	"math"
 )
 
 type Team_championship struct {
@@ -34,12 +35,13 @@ func GetTeamsFromChampionship(id string) (mapB []byte) {
 	return
 }
 
-func AsignarEquipos(id string) (mapB []byte) {
+func AsignarEquipos(id string, limit int) (mapB []byte) {
 	var error_list []tools.ErrorChampionship
 	var team_championship []Team_championship
 	var teams []Team
-	json.Unmarshal(GetTeam16(), &teams)
-	if len(teams) == 16 {
+	json.Unmarshal(GetTeam16(limit), &teams)
+	x := math.Log(float64(len(teams))) / math.Log(2)
+	if (x - float64(int(x)) ) == 0 && (int(x) > 2) {
 		for _, element := range teams {
 			team_championship = append(team_championship, Team_championship{
 				Team_id:         element.Id,
@@ -50,8 +52,8 @@ func AsignarEquipos(id string) (mapB []byte) {
 		tools.ListError(&error_list, err_tx)
 	} else {
 		tools.ListError(&error_list, errors.New(
-			"No existe el limite exigido de equipos :"+
-				" "+strconv.Itoa(len(teams))),
+			"No existe el limite exigido de equipos :" +
+				" " + strconv.Itoa(len(teams))),
 		)
 	}
 	if len(error_list) != 0 {

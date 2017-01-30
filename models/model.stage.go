@@ -131,6 +131,7 @@ func Play(combination Combinations, Stage_id string, Championship_id string) {
 			Id:match_id,
 			Team_winner:combination.team1.Id,
 			Team_losser:combination.team2.Id,
+			Is_draw:0,
 			Stage_id:Stage_id,
 		}),&match)
 	} else if goalEquipo1 < goalEquipo2 {
@@ -138,11 +139,15 @@ func Play(combination Combinations, Stage_id string, Championship_id string) {
 			Id:match_id,
 			Team_winner:combination.team2.Id,
 			Team_losser:combination.team1.Id,
+			Is_draw:0,
 			Stage_id:Stage_id,
 		}),&match)
 	}else {
 		json.Unmarshal(InsertMatch(Match{
 			Id:match_id,
+			Team_winner:combination.team1.Id,
+			Team_losser:combination.team2.Id,
+			Is_draw:1,
 			Stage_id:Stage_id,
 		}),&match)
 	}

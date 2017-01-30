@@ -33,3 +33,17 @@ func PlayGroupController(w http.ResponseWriter, h *http.Request) {
 	w.Write(models.PlayARound(championship_id))
 
 }
+
+func GetListStageFromChampionship(w http.ResponseWriter, h *http.Request) {
+	championship_id := h.URL.Query().Get("championship_id")
+	w = Set_ResponseWrite(w)
+
+	w.Write(models.GetListStageFromTeam(championship_id))
+}
+
+func GetTablePosicion(w http.ResponseWriter, h *http.Request) {
+	stage_id := h.URL.Query().Get("stage_id")
+	w = Set_ResponseWrite(w)
+
+	w.Write(models.GetTablePosition(stage_id))
+}

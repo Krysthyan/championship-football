@@ -33,14 +33,6 @@ CREATE TABLE `championship` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `championship`
---
-
-
---
--- Temporary view structure for view `get_winner`
---
 
 DROP TABLE IF EXISTS `get_winner`;
 /*!50001 DROP VIEW IF EXISTS `get_winner`*/;
@@ -78,13 +70,6 @@ CREATE TABLE `goal` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `goal`
---
-
---
--- Table structure for table `match`
---
 
 DROP TABLE IF EXISTS `match`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -105,13 +90,6 @@ CREATE TABLE `match` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `match`
---
-
---
--- Table structure for table `player`
---
 
 DROP TABLE IF EXISTS `player`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -129,13 +107,6 @@ CREATE TABLE `player` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `player`
---
-
---
--- Table structure for table `player_team`
---
 
 DROP TABLE IF EXISTS `player_team`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -162,14 +133,6 @@ CREATE TABLE `player_team` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `player_team`
---
-
-
---
--- Temporary view structure for view `posicion`
---
 
 DROP TABLE IF EXISTS `posicion`;
 /*!50001 DROP VIEW IF EXISTS `posicion`*/;
@@ -211,13 +174,6 @@ CREATE TABLE `stage` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `stage`
---
---
--- Table structure for table `team`
---
-
 DROP TABLE IF EXISTS `team`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -231,9 +187,6 @@ CREATE TABLE `team` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `team`
---
 
 -- Table structure for table `team_championship`
 --
@@ -257,14 +210,6 @@ CREATE TABLE `team_championship` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `team_championship`
---
-
---
--- Table structure for table `team_stage`
---
-
 DROP TABLE IF EXISTS `team_stage`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -284,17 +229,6 @@ CREATE TABLE `team_stage` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `team_stage`
---
-
---
--- Dumping events for database 'championship'
---
-
---
--- Dumping routines for database 'championship'
---
 /*!50003 DROP FUNCTION IF EXISTS `getGoalLosser` */;
 /*!50003 SET @saved_cs_client = @@character_set_client */;
 /*!50003 SET @saved_cs_results = @@character_set_results */;

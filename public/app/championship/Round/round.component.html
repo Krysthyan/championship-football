@@ -9,7 +9,9 @@
 <br>
 <br>
 
-<h3>Fase de Grupos</h3>
+<div class="alert alert-success">
+    <strong>Fase De Grupos</strong>
+</div>
 
 <div class="row">
 
@@ -62,7 +64,10 @@
 </div>
 
 
-<h3>Eliminatoria</h3>
+<div class="alert alert-success">
+    <strong>Eliminatoria</strong>
+</div>
+
 <div class="row">
     <div class="col-md-4">
         <table class="table table-hover table-striped table-bordered">
@@ -83,14 +88,20 @@
     <div class="col-md-8">
         <table class="table table-hover table-striped table-bordered">
             <tr>
-                <th>Id</th>
-                <th>Nombre</th>
+                <th>Equipo 1</th>
+                <th>Goles Equipo 1</th>
+                <th>Vs</th>
+                <th>Equipo 2</th>
+                <th>Goles Equipo 2</th>
             </tr>
 
             <tr *ngFor="let itemTeam of item_team_off |  paginate: { id: 'playOff', itemsPerPage: 7, currentPage: playff };let ind = index">
 
-                <td>{{itemTeam.id}}</td>
-                <td>{{itemTeam.name}}</td>
+                <td>{{itemTeam.team_winner}}</td>
+                <td>{{itemTeam.gol_equipo_1}}</td>
+                <td> -- VS -- </td>
+                <td>{{itemTeam.team_losser}}</td>
+                <td>{{itemTeam.gol_equipo_2}}</td>
             </tr>
         </table>
 

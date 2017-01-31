@@ -33,6 +33,55 @@ CREATE TABLE `championship` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `championship`
+--
+
+LOCK TABLES `championship` WRITE;
+/*!40000 ALTER TABLE `championship`
+  DISABLE KEYS */;
+INSERT INTO `championship` VALUES ('DD1F7E', 'Universidad De Cuenca');
+/*!40000 ALTER TABLE `championship`
+  ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `getEliminatoria`
+--
+
+DROP TABLE IF EXISTS `getEliminatoria`;
+/*!50001 DROP VIEW IF EXISTS `getEliminatoria`*/;
+SET @saved_cs_client = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `getEliminatoria` AS
+  SELECT
+    1 AS `Stage_id`,
+    1 AS `Team_winner`,
+    1 AS `Gol_equipo1`,
+    1 AS `Team_losser`,
+    1 AS `Gol_equipo2`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `get_eliminatoria`
+--
+
+DROP TABLE IF EXISTS `get_eliminatoria`;
+/*!50001 DROP VIEW IF EXISTS `get_eliminatoria`*/;
+SET @saved_cs_client = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `get_eliminatoria` AS
+  SELECT
+    1 AS `Stage_id`,
+    1 AS `Team_winner`,
+    1 AS `Gol_equipo1`,
+    1 AS `Team_losser`,
+    1 AS `Gol_equipo2`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `get_winner`
+--
 
 DROP TABLE IF EXISTS `get_winner`;
 /*!50001 DROP VIEW IF EXISTS `get_winner`*/;
@@ -174,6 +223,7 @@ CREATE TABLE `stage` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
 DROP TABLE IF EXISTS `team`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -187,9 +237,6 @@ CREATE TABLE `team` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
--- Table structure for table `team_championship`
---
 
 DROP TABLE IF EXISTS `team_championship`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
@@ -210,6 +257,7 @@ CREATE TABLE `team_championship` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
 DROP TABLE IF EXISTS `team_stage`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -229,6 +277,9 @@ CREATE TABLE `team_stage` (
   DEFAULT CHARSET = latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping routines for database 'championship'
+--
 /*!50003 DROP FUNCTION IF EXISTS `getGoalLosser` */;
 /*!50003 SET @saved_cs_client = @@character_set_client */;
 /*!50003 SET @saved_cs_results = @@character_set_results */;
@@ -363,7 +414,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode = @@sql_mode */;
 /*!50003 SET sql_mode = 'NO_ENGINE_SUBSTITUTION' */;
 DELIMITER ;;
-CREATE DEFINER =`root`@`localhost` FUNCTION `getGoalWinner`(
+CREATE DEFINER =`root`@`localhost` FUNCTION `GETGOALWINNER`(
   `Inteam`     VARCHAR(6),
   `InStage_id` VARCHAR(6)
 )
@@ -588,6 +639,35 @@ DELIMITER ;
 /*!50003 SET character_set_client = @saved_cs_client */;
 /*!50003 SET character_set_results = @saved_cs_results */;
 /*!50003 SET collation_connection = @saved_col_connection */;
+/*!50003 DROP FUNCTION IF EXISTS `getNameTeam` */;
+/*!50003 SET @saved_cs_client = @@character_set_client */;
+/*!50003 SET @saved_cs_results = @@character_set_results */;
+/*!50003 SET @saved_col_connection = @@collation_connection */;
+/*!50003 SET character_set_client = utf8 */;
+/*!50003 SET character_set_results = utf8 */;
+/*!50003 SET collation_connection = utf8_general_ci */;
+/*!50003 SET @saved_sql_mode = @@sql_mode */;
+/*!50003 SET sql_mode = 'NO_ENGINE_SUBSTITUTION' */;
+DELIMITER ;;
+CREATE DEFINER =`root`@`localhost` FUNCTION `getNameTeam`(
+  `InTeam_id` VARCHAR(6)
+)
+  RETURNS VARCHAR(45)
+  CHARSET latin1
+  BEGIN
+    DECLARE VNameTeam VARCHAR(45);
+
+    SELECT team.Name
+    INTO VnameTeam
+    FROM team
+    WHERE team.Id = `InTeam_id`;
+    RETURN VNameTeam;
+  END ;;
+DELIMITER ;
+/*!50003 SET sql_mode = @saved_sql_mode */;
+/*!50003 SET character_set_client = @saved_cs_client */;
+/*!50003 SET character_set_results = @saved_cs_results */;
+/*!50003 SET collation_connection = @saved_col_connection */;
 /*!50003 DROP FUNCTION IF EXISTS `GETPUNTOS` */;
 /*!50003 SET @saved_cs_client = @@character_set_client */;
 /*!50003 SET @saved_cs_results = @@character_set_results */;
@@ -799,6 +879,58 @@ DELIMITER ;
 /*!50003 SET collation_connection = @saved_col_connection */;
 
 --
+-- Final view structure for view `getEliminatoria`
+--
+
+/*!50001 DROP VIEW IF EXISTS `getEliminatoria`*/;
+/*!50001 SET @saved_cs_client = @@character_set_client */;
+/*!50001 SET @saved_cs_results = @@character_set_results */;
+/*!50001 SET @saved_col_connection = @@collation_connection */;
+/*!50001 SET character_set_client = utf8 */;
+/*!50001 SET character_set_results = utf8 */;
+/*!50001 SET collation_connection = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM = UNDEFINED */
+  /*!50013 DEFINER =`root`@`localhost`
+  SQL SECURITY DEFINER */
+  /*!50001 VIEW `getEliminatoria` AS
+  SELECT
+    `match`.`Stage_id`                                         AS `Stage_id`,
+    `getNameTeam`(`match`.`Team_winner`)                       AS `Team_winner`,
+    `GETGOALWINNER`(`match`.`Team_winner`, `match`.`Stage_id`) AS `Gol_equipo1`,
+    `getNameTeam`(`match`.`Team_losser`)                       AS `Team_losser`,
+    `GETGOALWINNER`(`match`.`Team_losser`, `match`.`Stage_id`) AS `Gol_equipo2`
+  FROM `match` */;
+/*!50001 SET character_set_client = @saved_cs_client */;
+/*!50001 SET character_set_results = @saved_cs_results */;
+/*!50001 SET collation_connection = @saved_col_connection */;
+
+--
+-- Final view structure for view `get_eliminatoria`
+--
+
+/*!50001 DROP VIEW IF EXISTS `get_eliminatoria`*/;
+/*!50001 SET @saved_cs_client = @@character_set_client */;
+/*!50001 SET @saved_cs_results = @@character_set_results */;
+/*!50001 SET @saved_col_connection = @@collation_connection */;
+/*!50001 SET character_set_client = utf8 */;
+/*!50001 SET character_set_results = utf8 */;
+/*!50001 SET collation_connection = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM = UNDEFINED */
+  /*!50013 DEFINER =`root`@`localhost`
+  SQL SECURITY DEFINER */
+  /*!50001 VIEW `get_eliminatoria` AS
+  SELECT
+    `match`.`Stage_id`                                         AS `Stage_id`,
+    `GETNAMETEAM`(`match`.`Team_winner`)                       AS `Team_winner`,
+    `GETGOALWINNER`(`match`.`Team_winner`, `match`.`Stage_id`) AS `Gol_equipo1`,
+    `GETNAMETEAM`(`match`.`Team_losser`)                       AS `Team_losser`,
+    `GETGOALWINNER`(`match`.`Team_losser`, `match`.`Stage_id`) AS `Gol_equipo2`
+  FROM `match` */;
+/*!50001 SET character_set_client = @saved_cs_client */;
+/*!50001 SET character_set_results = @saved_cs_results */;
+/*!50001 SET collation_connection = @saved_col_connection */;
+
+--
 -- Final view structure for view `get_winner`
 --
 
@@ -867,5 +999,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-31  5:31:03
-
+-- Dump completed on 2017-01-31  6:34:59

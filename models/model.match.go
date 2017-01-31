@@ -25,6 +25,13 @@ type Posicion struct {
 	Gc string `json:"gc"`
 }
 
+type Get_eliminatoria struct {
+	Team_winner string `json:"team_winner"`
+	Gol_equipo1 string `json:"gol_equipo_1"`
+	Team_losser string `json:"team_losser"`
+	Gol_equipo2 string `json:"gol_equipo_2"`
+}
+
 type Combinations struct {
 	team1 Team `json:"team_1"`
 	team2 Team `json:"team_2"`
@@ -82,5 +89,26 @@ func GetMatchStage(id_stage string) (mapB []byte) {
 	ORM().QueryTable("match").Filter("Stage_id", id_stage).All(&match)
 
 	mapB,_ = json.Marshal(match)
+	return
+}
+
+func GetEliminatoria(id_stage string) (mapB []byte)  {
+	var eliminatoria []Get_eliminatoria
+	var listValues []orm.ParamsList
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+	qb.Select("*").From("get_eliminatoria").Where("Stage_id = ? ")
+	ORM().Raw(qb.String(), id_stage).ValuesList(&listValues)
+
+	for _, element := range listValues {
+		eliminatoria = append(eliminatoria, Get_eliminatoria{
+			Team_winner:element[1].(string),
+			Gol_equipo1:element[2].(string),
+			Team_losser:element[3].(string),
+			Gol_equipo2:element[4].(string),
+		})
+	}
+	mapB, _ = json.Marshal(eliminatoria)
+
 	return
 }

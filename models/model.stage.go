@@ -213,7 +213,7 @@ func GetStageFromChampionship(Championship_id string, condition string) (mapB []
 	var stage []Stage
 
 	ORM().QueryTable("stage").
-		Filter("championship_id", Championship_id).Filter(condition, 4).
+		Filter("championship_id", Championship_id).Filter(condition, 4).OrderBy("Round").
 		All(&stage)
 	mapB, _ = json.Marshal(stage)
 

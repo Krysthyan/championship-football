@@ -3,4 +3,3 @@
 /public/node_modules/
 public/app/**/*.js
 public/app/**/*.js.map
-data_base

@@ -38,7 +38,14 @@ func GetListStageFromChampionship(w http.ResponseWriter, h *http.Request) {
 	championship_id := h.URL.Query().Get("championship_id")
 	w = Set_ResponseWrite(w)
 
-	w.Write(models.GetListStageFromTeam(championship_id))
+	w.Write(models.GetListStageFromTeam(championship_id, "round__lt"))
+}
+
+func GetPlayOff(w http.ResponseWriter, h *http.Request) {
+	championship_id := h.URL.Query().Get("championship_id")
+	w = Set_ResponseWrite(w)
+
+	w.Write(models.GetStageFromChampionship(championship_id, "round__gte"))
 }
 
 func GetTablePosicion(w http.ResponseWriter, h *http.Request) {
@@ -46,4 +53,16 @@ func GetTablePosicion(w http.ResponseWriter, h *http.Request) {
 	w = Set_ResponseWrite(w)
 
 	w.Write(models.GetTablePosition(stage_id))
+}
+
+func GetTeamPlayOffs(w http.ResponseWriter, h *http.Request) {
+	var listStage models.ListTeamStage;
+
+	stage_id := h.URL.Query().Get("stage_id")
+
+	json.Unmarshal(models.GetTeamFromStage(stage_id), &listStage)
+	mapB,_ := json.Marshal(listStage.Team)
+	w = Set_ResponseWrite(w)
+	w.Write(mapB)
+
 }

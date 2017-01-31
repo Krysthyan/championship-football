@@ -16,7 +16,7 @@ func InsertTeamStage(teamStage Team_stage) []byte {
 
 func GetLevelChampionship(Championship_id string) (level int) {
 	ORM().Raw("CALL getRaundHigher(?)", Championship_id).QueryRow(&level)
-
+	log.Println(level)
 	return
 }
 

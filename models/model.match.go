@@ -17,11 +17,17 @@ type Posicion struct {
 	Stage_id string `json:"stage_id" orm:"pk"`
 	Name string `json:"name"`
 	Points string `json:"points"`
+	Pj string `json:"pj"`
+	Pg string `json:"pg"`
+	Pp string `json:"pp"`
+	Pe string `json:"pe"`
+	Gf string `json:"gf"`
+	Gc string `json:"gc"`
 }
 
 type Combinations struct {
-	team1 Team
-	team2 Team
+	team1 Team `json:"team_1"`
+	team2 Team `json:"team_2"`
 }
 
 func InsertMatch(match Match) []byte {
@@ -56,10 +62,25 @@ func GetTablePosition(id_stage string) (mapB []byte)  {
 		position = append(position, Posicion{
 			Stage_id:element[0].(string),
 			Name: element[1].(string),
-			Points:   element[3].(string),
+			Pj: element[3].(string),
+			Points: element[4].(string),
+			Pg:element[5].(string),
+			Pp:element[6].(string),
+			Pe:element[7].(string),
+			Gf:element[8].(string),
+			Gc:element[9].(string),
+
 		})
 	}
 	mapB, _ = json.Marshal(position)
 
+	return
+}
+
+func GetMatchStage(id_stage string) (mapB []byte) {
+	var match []Match
+	ORM().QueryTable("match").Filter("Stage_id", id_stage).All(&match)
+
+	mapB,_ = json.Marshal(match)
 	return
 }

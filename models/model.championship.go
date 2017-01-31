@@ -72,3 +72,9 @@ func GetJsonChampionship(championship []Championship) (mapB []byte) {
 	mapB, _ = json.Marshal(championship)
 	return
 }
+
+func CountTeamInChampionship(Championship_id string) int  {
+	num, _ := ORM().QueryTable("team_championship").Filter("Championship_id",Championship_id).Count()
+
+	return int(num)
+}

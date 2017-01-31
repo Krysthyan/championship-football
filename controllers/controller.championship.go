@@ -61,3 +61,14 @@ func DeleteChampionship(w http.ResponseWriter, h *http.Request) {
 	w.Write(mapB)
 
 }
+func CountTeamChampionShip(w http.ResponseWriter, h *http.Request) {
+
+	championship_id := h.URL.Query().Get("championship_id")
+
+	w = Set_ResponseWrite(w)
+	count := models.CountTeamInChampionship(championship_id)
+
+	mapB,_:= json.Marshal(count)
+
+	w.Write(mapB)
+}

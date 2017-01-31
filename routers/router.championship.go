@@ -30,4 +30,9 @@ func RouterChampionship(championship *mux.Router) {
 		"/championship/delete",
 		controllers.DeleteChampionship,
 	).Methods("POST")
+
+	championship.HandleFunc(
+		"/championship/getCountTeam",
+		controllers.CountTeamChampionShip,
+	).Methods("GET")
 }

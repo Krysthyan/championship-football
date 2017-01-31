@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"errors"
 	"log"
+	"github.com/astaxie/beego/orm"
 )
 
 type Stage struct {
@@ -20,6 +21,12 @@ type Stage struct {
 type ListTeamStage struct {
 	Id string `json:"id"`
 	Team []Team `json:"team"`
+}
+
+type Team_winner struct {
+	Id_stage string `json:"id_stage"`
+	Id_team string `json:"id_team"`
+	Championship_id string `json:"championship_id"`
 }
 
 func InsertStage(stage Stage) []byte {
@@ -103,17 +110,32 @@ func PlayARound(Championship_id string) (mapB []byte) {
 	var listTeamStage []ListTeamStage
 	levelChampionship := GetLevelChampionship(Championship_id)
 
-	json.Unmarshal(GetListStageFromTeam(Championship_id), & listTeamStage)
 
-	for _, element := range listTeamStage{
-		combinations := CombinationsTeam(element.Team)
-		Play(combinations[levelChampionship], element.Id, Championship_id)
-		Play(combinations[5 - levelChampionship], element.Id, Championship_id)
-		UpdateStage(element.Id, 1)
+	/* len(numTeams) / 2^(Round - 3) = numTems , equipos que pertenecen a la ronda*/
+	num_teams := (float64( CountTeamInChampionship(Championship_id) ))/(math.Pow(2.0, (float64(levelChampionship) - 3.0)))
+
+	if levelChampionship < 3 {
+		log.Println("estamos en la opcopmm 1")
+		json.Unmarshal(GetListStageFromTeam(Championship_id, "round__lt"), & listTeamStage)
+
+		for _, element := range listTeamStage{
+			combinations := CombinationsTeam(element.Team)
+			Play(combinations[levelChampionship], element.Id, Championship_id)
+			Play(combinations[5 - levelChampionship], element.Id, Championship_id)
+			UpdateStage(element.Id, 1)
+		}
+		mapB, _ = json.Marshal("Todo bien....")
+
+	}else if levelChampionship == 3 {
+		log.Println("estamos en la opcopmm 2")
+		mapB = PlayOff(Championship_id, levelChampionship + 1)
+	}else if levelChampionship > 3 && num_teams > 1 {
+
+		mapB = GetWinner(Championship_id, int(num_teams),levelChampionship + 1)
+
+	}else if num_teams == 1 {
+		mapB, _ = json.Marshal("El campeonato a finalizado")
 	}
-
-	mapB, _ = json.Marshal("Todo bien....")
-
 	return
 
 }
@@ -173,10 +195,10 @@ func SaveUpdateGoal(Match_id string, Team_id string, Championship_id string)  {
 	}
 }
 
-func GetListStageFromTeam(Championship_id string) (mapB []byte) {
+func GetListStageFromTeam(Championship_id string, condition string) (mapB []byte) {
 	var stages []Stage
 	var listTeamStage []ListTeamStage
-	json.Unmarshal(GetStageFromChampionship(Championship_id), &stages)
+	json.Unmarshal(GetStageFromChampionship(Championship_id, condition), &stages)
 
 	for _, stage := range stages{
 		var team_stage_list ListTeamStage
@@ -187,17 +209,91 @@ func GetListStageFromTeam(Championship_id string) (mapB []byte) {
 	return
 }
 
-func GetStageFromChampionship(Championship_id string) (mapB []byte) {
+func GetStageFromChampionship(Championship_id string, condition string) (mapB []byte) {
 	var stage []Stage
 
 	ORM().QueryTable("stage").
-		Filter("championship_id", Championship_id).
+		Filter("championship_id", Championship_id).Filter(condition, 4).
 		All(&stage)
-	log.Println("estamos aqui")
 	mapB, _ = json.Marshal(stage)
 
 	return
 }
+
+
+func PlayOff(Championship_id string, level int) []byte {
+	log.Println(Championship_id)
+	num_teams := CountTeamInChampionship(Championship_id)
+
+	return GetWinner(Championship_id, num_teams, level)
+}
+
+func GetWinner(Championship_id string, num_team int, level int) (mapB []byte){
+	log.Println(" \n\n\n\n")
+	log.Println(num_team)
+	var team_winners []Team_winner
+	var combinations []Combinations
+	var listValues []orm.ParamsList
+
+	stage := Stage{
+		Championship_id:Championship_id,
+		Id:tools.ChampionshipToken(3),
+		IsStage:0,
+		Round:level,
+	}
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+	if level == 4 {
+		qb.Select("*").From("get_winner").Where("Championship_id = ? ").Limit(num_team/2)
+	} else {
+		qb.Select("*").From("get_winner").Where("Championship_id = ? ").OrderBy("Round").Desc().Limit(num_team)
+	}
+
+	ORM().Raw(qb.String(), Championship_id).ValuesList(&listValues)
+
+	for _, element := range listValues {
+
+		team_winners = append(team_winners, Team_winner{
+			Id_team:element[0].(string),
+			Championship_id:element[1].(string),
+		})
+	}
+	InsertStage(stage)
+
+	for index:= 0; index < num_team / 4; index ++ {
+		var team1 Team
+		var team2 Team
+		json.Unmarshal(GetTeam(team_winners[index].Id_team), &team1)
+		json.Unmarshal(GetTeam(team_winners[( (num_team / 2) - 1 ) - index].Id_team), &team2)
+
+		InsertTeamStage(Team_stage{
+			Stage_id:stage.Id,
+			Team_id:team1.Id,
+		})
+
+		InsertTeamStage(Team_stage{
+			Stage_id:stage.Id,
+			Team_id:team2.Id,
+		})
+
+
+		combination := Combinations{
+			team1:team1,
+			team2:team2,
+		}
+		log.Println("\n\n\n")
+		log.Println(combination)
+		log.Println("\n\n\n")
+		Play(combination, stage.Id, Championship_id)
+
+		combinations = append(combinations, combination)
+	}
+	log.Println(combinations)
+	mapB, _ = json.Marshal(combinations)
+
+	return
+}
+
 
 func GetNewStage(Championship_id string) Stage {
 	return Stage{
@@ -207,3 +303,4 @@ func GetNewStage(Championship_id string) Stage {
 		Championship_id:Championship_id,
 	}
 }
+

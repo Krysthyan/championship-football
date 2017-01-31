@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {HeroService} from '../../providers/team.service'
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     moduleId: module.id,
@@ -19,15 +20,20 @@ export class TeamDesktopComponent {
 
     public teams_save_return : string;
 
-    constructor(private hero: HeroService) {
+    constructor(private hero: HeroService, private route: ActivatedRoute) {
+        this.route.queryParams.subscribe(params => {
+            this.name_save_team = params["name_championship"];
+            console.log(this.name_save_team);
+        });
+
     }
 
     saveTeam(){
 
-        this.hero.postSaveTeam({name: this.name_save_team}).subscribe(
+        this.hero.postSaveTeam(this.name_save_team).subscribe(
             data => {
 
-                this.teams_save_return = data.json().name;
+                this.teams_save_return = data.json()[0].name;
 
             },
             err => {

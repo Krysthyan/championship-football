@@ -1,5 +1,5 @@
 import {Component, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import {HeroService} from '../providers/team.service';
+import {HeroService} from '../../providers/team.service';
 import {Router, NavigationExtras} from "@angular/router";
 
 
@@ -12,10 +12,20 @@ import {Router, NavigationExtras} from "@angular/router";
 export class ChampionshipComponent  implements OnInit, OnChanges {
     items: any;
     public name_championship = '';
-
+    selectClickedRow: Function;
     constructor(
         private hero: HeroService,
         private router:Router) {
+
+        this.selectClickedRow = function (item: any) {
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    "name_championship": item.name
+                }
+            };
+            this.router.navigate(['championship/playRound'], navigationExtras);
+
+        };
 
     }
 
@@ -28,7 +38,7 @@ export class ChampionshipComponent  implements OnInit, OnChanges {
                         "name_championship": this.name_championship
                     }
                 };
-                this.router.navigate(['team'], navigationExtras);
+                this.router.navigate(['championship/desktop'], navigationExtras);
 
             },
             err => {

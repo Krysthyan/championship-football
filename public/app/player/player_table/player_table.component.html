@@ -1,45 +1,70 @@
-<div class="col-md-6 table-responsive">
+
+<button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModalPlayer">Agregar Jugadores Aleatorios</button>
+<br>
+<br>
+<div class="modal fade" id="myModalPlayer" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Agregar Jugadores</h4>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" [(ngModel)]="num_jugadores" [ngModelOptions]="{standalone: true}"
+                                   class="form-control"
+                                   placeholder="Ingrese el número de jugadores">
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="agregarJugadores()">Agregar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="table-responsive">
     <table class="table table-hover table-striped table-bordered">
         <tr>
+            <th>Cedula</th>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>Posición</th>
             <th>Numero</th>
-            <th>
-                <button
-                        type="button"
-                        class="btn btn-primary btn-group-justified"
-                        data-toggle="modal" data-target="#saveJugador"
-                >Agregar</button>
-            </th>
+            <th>Dirección</th>
 
         </tr>
 
-        <tr *ngFor="let item of items | paginate: { id: 'player_table', itemsPerPage: 7, currentPage: player }"
-            (click)="selectClickedRow(item)" [class.active]="item.name == name">
+        <tr *ngFor="let item of items | paginate: { id: 'player_table', itemsPerPage: 11, currentPage: player }">
 
+            <td>{{item.id}}</td>
             <td>{{item.name}}</td>
             <td>{{item.lastname}}</td>
+            <td>{{item.position}}</td>
             <td>{{item.number}}</td>
-            <td ><div class="btn-group btn-block ">
-                <button type="button" class="btn btn-danger right">Opciones</button>
-                <button type="button" class="btn btn-danger right  dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" data-toggle="modal" data-target="#viewJugador">Ver</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#editJugador">Editar</a></li>
-                    <li><a class="alert-warning" href="#" data-toggle="modal" data-target="#deleteJugador">Eliminar</a></li>
-                </ul>
-            </div></td>
-
-
+            <td>{{item.direction}}</td>
         </tr>
     </table>
 
     <pagination-controls class="pagination justify-content-center"
                          (pageChange)="player = $event" id="player_table"
-                         maxSize="9"
+                         maxSize="11"
                          directionLinks="true"
                          previousLabel="Anterior"
                          nextLabel="Siguiente"
@@ -47,10 +72,3 @@
     ></pagination-controls>
 </div>
 
-
-
-
-<person-save name_team="{{name_team}}"></person-save>
-<person-delete></person-delete>
-<person-edit></person-edit>
-<person-view></person-view>

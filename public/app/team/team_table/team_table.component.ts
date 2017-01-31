@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 
-import {TeamDesktopComponent} from '../team_desktop/team_desktop.component'
 
 import  {HeroService} from "../../providers/team.service"
 

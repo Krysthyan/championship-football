@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, OnInit} from '@angular/core';
 
 import  {HeroService} from "../../providers/team.service"
 
@@ -10,13 +10,13 @@ import  {HeroService} from "../../providers/team.service"
     providers:   [HeroService]
 })
 
-export class JugadorComponet implements OnChanges {
+export class JugadorComponet implements OnChanges, OnInit {
 
 
     items: any;
     @Input() id_team: string;
     @Input() name_team: string;
-
+    public num_jugadores:number;
     selectClickedRow: Function;
 
     public name: string;
@@ -28,23 +28,34 @@ export class JugadorComponet implements OnChanges {
             this.lastname = item.lastname
         }
     }
-
+    agregarJugadores(){
+        this.hero.postSavePlayer(this.num_jugadores).subscribe(
+            data => {
+                this.ngOnInit();
+            }
+        );
+    }
     ngOnChanges(changes: SimpleChanges): void {
         if (this.id_team.length > 0){
             console.log("Player");
             console.log(this.id_team);
-            this.hero.getPersonTeam(this.id_team).subscribe(
-                data => {
-                    this.items = data.json();
-                },
-                err => {
-                    console.error(err)
-                },
-                () => {
-                    console.log("Datos obtenidos")
-                }
-            );
+            this.ngOnInit();
         }
+
+    }
+    ngOnInit() {
+        this.hero.getPlayers().subscribe(
+            data => {
+                this.items = data.json();
+            },
+            err => {
+                console.error(err)
+            },
+            () => {
+                console.log("Datos obtenidos")
+            }
+        );
+
 
 
     }

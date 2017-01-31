@@ -1,0 +1,132 @@
+
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <h2 class="text-center">{{name_championship}}</h2>
+        </div>
+        <br>
+
+
+        <div class="alert alert-success">
+            <strong>Asignar Equipos</strong>
+        </div>
+
+        <div class="form-group row">
+            <label for="example-number-input" class="col-xs-7 col-form-label">Numero de equipos</label>
+            <div class="col-xs-5">
+                <select class="form-control" id="sel1" #selectedCategory>
+                    <option>8</option>
+                    <option>16</option>
+                    <option>32</option>
+                    <option>64</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col-sm-offset-2" >
+            <button type="submit" class="btn btn-primary btn-block " (click)="asigarEquiposAleatorios(selectedCategory.value)">Asigar Aleatorio</button>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="alert alert-success">
+            <strong>Asignar Jugadores</strong>
+        </div>
+        <div class="form-group row">
+            <label for="example-number-input" class="col-xs-7 col-form-label">Numero de jugadores</label>
+            <div class="col-xs-5">
+                <input class="form-control" type="number" value="11" id="example-number-input">
+            </div>
+        </div>
+        <div class="col-sm-offset-2" *ngIf="!spinner.active" id="container">
+            <button type="submit" class="btn btn-primary btn-block" (click)="asignarJugadores()">Asigar Juagdores a equipos</button>
+        </div>
+        <br>
+        <br>
+
+        <div>
+            <div class="col-sm-offset-2">
+                <button type="submit" class="btn btn-block btn-success" (click)="jugarCampeonato()">Jugar Campeonato</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <!--tabla de equipos-->
+        <div>
+            <h2 class="text-center">Equipos Asignados</h2>
+        </div>
+        <br>
+        <div >
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                    </tr>
+
+                    <tr (click)="selectClickedRow(item)"
+                        *ngFor="let item of items |  paginate: { id: 'team_table', itemsPerPage: 7, currentPage: team }">
+
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+
+                    </tr>
+                </table>
+                <pagination-controls class="pagination justify-content-center"
+                                     (pageChange)="team = $event" id="team_table"
+                                     maxSize="9"
+                                     directionLinks="true"
+                                     autoHide="true"
+                                     previousLabel="Anterior"
+                                     nextLabel="Siguiente"
+                                     screenReaderPaginationLabel="Pagination"
+                                     screenReaderPageLabel="page"
+                ></pagination-controls>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-center">Jugadores Asignados</h2>
+        </div>
+        <br>
+
+        <!--tabla de jugadores-->
+        <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Posición</th>
+                <th>Numero</th>
+                <th>Dirección</th>
+
+            </tr>
+
+            <tr *ngFor="let item of items_player | paginate: { id: 'player_table', itemsPerPage: 11, currentPage: player }">
+
+                <td>{{item.name}}</td>
+                <td>{{item.lastname}}</td>
+                <td>{{item.position}}</td>
+                <td>{{item.number}}</td>
+                <td>{{item.direction}}</td>
+            </tr>
+        </table>
+
+        <pagination-controls class="pagination justify-content-center"
+                             (pageChange)="player = $event" id="player_table"
+                             maxSize="11"
+                             directionLinks="true"
+                             previousLabel="Anterior"
+                             nextLabel="Siguiente"
+
+        ></pagination-controls>
+    </div>
+
+    </div>
+</div>
+
+
+
+

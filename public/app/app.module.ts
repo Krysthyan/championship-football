@@ -7,8 +7,11 @@ import {Ng2PaginationModule} from 'ng2-pagination'
 import {AppComponent}         from './desktop/desktop.component';
 import {TeamDesktopComponent}   from './team/team_desktop/team_desktop.component';
 import {TeamTableComponent} from './team/team_table/team_table.component';
+
 import {HeroService}          from './providers/team.service';
-import {TeamComponent}        from './team/team_description/team_description.component';
+import {ChampionshipService} from'./providers/championship.service'
+import {SpinnerService} from './providers/spinner.service'
+
 import {JugadorComponet}      from './player/player_table/player_table.component';
 import {AppRoutingModule}     from './app-routing.module';
 
@@ -16,6 +19,11 @@ import {SavePersonComponent} from "./person/save_person/save_person.component";
 import {DeletePersonComponent} from './person/delete_person/delete_person.component';
 import {EditPersonComponent} from './person/edit_person/edit_person.component';
 import {ViewPersonComponent} from './person/view_person/view_person.component';
+
+import {ChampionshipComponent} from './championship/init/championship.component';
+import{ChampionshipInitComponent} from './championship/Desktop/chamship.component';
+import {RoundComponent} from './championship/Round/round.component';
+
 
 
 @NgModule({
@@ -31,15 +39,17 @@ import {ViewPersonComponent} from './person/view_person/view_person.component';
         AppComponent,
         TeamDesktopComponent,
         TeamTableComponent,
-        TeamComponent,
         JugadorComponet,
         SavePersonComponent,
         DeletePersonComponent,
         EditPersonComponent,
-        ViewPersonComponent
+        ViewPersonComponent,
+        ChampionshipComponent,
+        ChampionshipInitComponent,
+        RoundComponent
     ],
 
-    providers: [HeroService],
+    providers: [HeroService,ChampionshipService,SpinnerService],
     bootstrap: [AppComponent]
 })
 

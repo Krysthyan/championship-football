@@ -1,4 +1,4 @@
-<div class="col-md-2 table-responsive">
+<div class="col-md-4 table-responsive">
     <table class="table table-hover table-striped table-bordered">
         <tr>
             <th>Id</th>
@@ -6,7 +6,7 @@
         </tr>
 
         <tr (click)="selectClickedRow(item)" [class.active]="item.name == name_team_select  "
-                *ngFor="let item of items |  paginate: { id: 'team_table', itemsPerPage: 10, currentPage: team }">
+                *ngFor="let item of items |  paginate: { id: 'team_table', itemsPerPage: 15, currentPage: team }">
 
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
@@ -15,7 +15,7 @@
     </table>
     <pagination-controls class="pagination justify-content-center"
                          (pageChange)="team = $event" id="team_table"
-                         maxSize="9"
+                         maxSize="20"
                          directionLinks="true"
                          autoHide="true"
                          previousLabel="Anterior"

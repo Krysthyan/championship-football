@@ -1,0 +1,107 @@
+
+
+<div class="row">
+    <div class="col-md-4">
+        <button class="btn btn-primary" (click)="playGroup()">Jugar Ronda</button>
+    </div>
+
+</div>
+<br>
+<br>
+
+<h3>Fase de Grupos</h3>
+
+<div class="row">
+
+
+    <div class="col-md-4">
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Numero de grupo</th>
+            </tr>
+
+            <tr (click)="selectClickedRow(item)" [class.active]="item.name == name_team_select  "
+                *ngFor="let item of items |  paginate: { id: 'team_table', itemsPerPage: 7, currentPage: team }; let i = index; trackBy: trackByTeam;">
+
+                <td>{{item.id}}</td>
+                <td>Grupo {{i+1}}</td>
+
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-md-8">
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>Equipo</th>
+                <th>Puntos</th>
+                <th>P. Jugados</th>
+                <th>P. Ganados</th>
+                <th>P. Perdidos</th>
+                <th>P. Empatados</th>
+                <th>Gol Favor</th>
+                <th>Gol Contra</th>
+            </tr>
+
+            <tr *ngFor="let itemP of items_equipos |  paginate: { id: 'team_table', itemsPerPage: 7, currentPage: team };">
+
+                <td>{{itemP.name}}</td>
+                <td>{{itemP.points}}</td>
+                <td>{{itemP.pj}}</td>
+                <td>{{itemP.pg}}</td>
+                <td>{{itemP.pp}}</td>
+                <td>{{itemP.pe}}</td>
+                <td>{{itemP.gf}}</td>
+                <td>{{itemP.gc}}</td>
+
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<h3>Eliminatoria</h3>
+<div class="row">
+    <div class="col-md-4">
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Play OFF</th>
+            </tr>
+
+            <tr (click)="selectPlayOff(itemPlay)"
+                *ngFor="let itemPlay of item_stage_off ; let index = index; trackBy: trackByFn;">
+
+                <td>{{itemPlay.id}}</td>
+                <td>{{itemPlay.championship_id}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="col-md-8">
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+            </tr>
+
+            <tr *ngFor="let itemTeam of item_team_off |  paginate: { id: 'playOff', itemsPerPage: 7, currentPage: playff };let ind = index">
+
+                <td>{{itemTeam.id}}</td>
+                <td>{{itemTeam.name}}</td>
+            </tr>
+        </table>
+
+        <pagination-controls class="pagination justify-content-center"
+                             (pageChange)="playff = $event" id="playOff"
+                             maxSize="11"
+                             directionLinks="true"
+                             previousLabel="Anterior"
+                             nextLabel="Siguiente"
+
+        ></pagination-controls>
+    </div>
+</div>
+

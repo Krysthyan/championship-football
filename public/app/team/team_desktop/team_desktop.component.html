@@ -1,6 +1,5 @@
-<div class="container">
-    <h3>Equipos</h3>
-    <button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Agregar Equipo</button>
+
+    <button type="button" class="btn btn-info " data-toggle="modal" data-target="#myModal">Agregar Equipos Aleatorios</button>
     <br>
     <br>
     <div class="modal fade" id="myModal" role="dialog">
@@ -10,7 +9,7 @@
             <div class="modal-content modal-sm">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Agregar un equipo</h4>
+                    <h4 class="modal-title">Agregar un equipos</h4>
                 </div>
                 <div class="modal-body">
 
@@ -21,7 +20,7 @@
                             <div class="col-sm-12">
                                 <input type="text" [(ngModel)]="name_save_team" [ngModelOptions]="{standalone: true}"
                                        class="form-control"
-                                       placeholder="Ingrese nombre del equipo aquí">
+                                       placeholder="Ingrese el número de equipos">
                             </div>
                         </div>
 
@@ -44,8 +43,6 @@
                 [team_save_return]="teams_save_return">
         </team-table>
 
-        <team-desc name="{{name_team_select}}"></team-desc>
-        <player id_team="{{id_team_select}}" name_team="{{name_team_select}}"></player>
+        <player></player>
     </div>
 
-</div>

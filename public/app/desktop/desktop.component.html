@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="desktop.component.html">Championship football</a>
+            <a class="navbar-brand" href="#">Campeonato de Futbol</a>
         </div>
 
         <ul class="nav navbar-nav">
@@ -12,40 +12,28 @@
             </li>
 
             <li class="dropdown">
-                <a href="desktop.component.html" class="dropdown-toggle" data-toggle="dropdown">
-                    Paginas<span class="caret"></span>
+                <a href="#/team" class="dropdown-toggle" data-toggle="dropdown">
+                    Campeonato<span class="caret"></span>
                 </a>
 
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="desktop.component.html">Pagina 1</a>
-                        <a href="desktop.component.html">Pagina 2</a>
+
+                        <a href="#/team">Ver tabla de posiciones</a>
+                        <a href="#">Ver ultima Ronda</a>
+                        <a href="desktop.component.html">Jugar Ronda</a>
+
                     </li>
                 </ul>
             </li>
 
             <li>
-                <a routerLink="/heroes" routerLinkActive="active">Jugadores</a>
+                <a href="#/championship/team" routerLinkActive="active">Asignar Equipos/Jugadores Aleatorios</a>
             </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="desktop.component.html" class="glyphicon glyphicon-user">
-                    <span>Registrarse</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="desktop.component.html" class="glyphicon glyphicon-log-in">
-                    <span>Iniciar Sesión</span>
-                </a>
-            </li>
-
         </ul>
     </div>
 
 </nav>
 <div class="container">
-    <router-outlet></router-outlet>
+    <router-outlet ></router-outlet>
 </div>
